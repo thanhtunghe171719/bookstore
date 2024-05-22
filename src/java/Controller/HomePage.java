@@ -44,8 +44,9 @@ public class HomePage extends HttpServlet {
         DAOProduct daoProduct = new DAOProduct();
         DAOCampaigns daoCampaigns = new DAOCampaigns();
         
-        Vector<Campaigns> vectorCampains = daoCampaigns.getAll("select * from Campaigns ORDER BY compaigh_id DESC LIMIT 3");
+        Vector<Campaigns> vectorCampains = daoCampaigns.getAll("select * from Campaigns ORDER BY compaign_id DESC LIMIT 3");
         request.setAttribute("3campaigns", vectorCampains);
+
         
         String service = request.getParameter("service");
         if (service == null) {
@@ -73,6 +74,7 @@ public class HomePage extends HttpServlet {
         }
         
         if(service.equals("new")){
+            
             Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE book_id > 0 ORDER BY book_id DESC LIMIT 6;");
             request.setAttribute("6products", vectorProducts);
 
@@ -83,11 +85,12 @@ public class HomePage extends HttpServlet {
         }
         
         if(service.equals("sold")){
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT b.book_id, b.picture, b.title, b.author, b.published_year, b.genre,\n" +
-                                                                "      b.summary, b.price, b.discount, b.stock, b.create_at, b.update_at\n" +
+            Vector<Product> vectorProducts = daoProduct.getAll("SELECT b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
+                                                                "    b.weight, b.summary, b.price, b.discount,  b.stock, b.create_at, b.update_at\n" +
                                                                 "FROM books b LEFT JOIN order_items oi ON b.book_id = oi.book_id\n" +
-                                                                "GROUP BY b.book_id\n" +
-                                                                "ORDER BY COALESCE(SUM(oi.quantity), 0) DESC LIMIT 6;");
+                                                                "GROUP BY b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
+                                                                "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.update_at\n" +
+                                                                "ORDER BY  COALESCE(SUM(oi.quantity), 0) DESC LIMIT 6;");
             request.setAttribute("6products", vectorProducts);
 
             //select(jsp)   

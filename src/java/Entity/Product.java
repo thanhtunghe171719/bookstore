@@ -11,11 +11,13 @@ import java.sql.Timestamp;
  */
 public class Product {
     private int book_id;
-    private String picture;
     private String title;
     private String author;
+    private String image;    
+    private int category_id;
     private int published_year;
-    private String genre;
+    private String size;
+    private String weight;
     private String summary;
     private int price;
     private int discount;
@@ -26,13 +28,15 @@ public class Product {
     public Product() {
     }
 
-    public Product(int book_id, String picture, String title, String author, int published_year, String genre, String summary, int price, int discount, int stock, Timestamp create_at, Timestamp update_at) {
+    public Product(int book_id, String title, String author, String image, int category_id, int published_year, String size, String weight, String summary, int price, int discount, int stock, Timestamp create_at, Timestamp update_at) {
         this.book_id = book_id;
-        this.picture = picture;
         this.title = title;
         this.author = author;
+        this.image = image;
+        this.category_id = category_id;
         this.published_year = published_year;
-        this.genre = genre;
+        this.size = size;
+        this.weight = weight;
         this.summary = summary;
         this.price = price;
         this.discount = discount;
@@ -47,14 +51,6 @@ public class Product {
 
     public void setBook_id(int book_id) {
         this.book_id = book_id;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
     }
 
     public String getTitle() {
@@ -73,6 +69,22 @@ public class Product {
         this.author = author;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+
     public int getPublished_year() {
         return published_year;
     }
@@ -81,12 +93,20 @@ public class Product {
         this.published_year = published_year;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getSize() {
+        return size;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public String getSummary() {
@@ -139,8 +159,7 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "book_id=" + book_id + ", picture=" + picture + ", title=" + title + ", author=" + author + ", published_year=" + published_year + ", genre=" + genre + ", summary=" + summary + ", price=" + price + ", discount=" + discount + ", stock=" + stock + ", create_at=" + create_at + ", update_at=" + update_at + '}';
+        return "Product{" + "book_id=" + book_id + ", title=" + title + ", author=" + author + ", image=" + image + ", category_id=" + category_id + ", published_year=" + published_year + ", size=" + size + ", weight=" + weight + ", summary=" + summary + ", price=" + price + ", discount=" + discount + ", stock=" + stock + ", create_at=" + create_at + ", update_at=" + update_at + '}';
     }
-    
-    
+
 }

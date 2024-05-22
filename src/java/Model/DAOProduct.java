@@ -26,18 +26,20 @@ public class DAOProduct extends DBConnect{
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                  int book_id = rs.getInt(1);
-                 String picture = rs.getString(2);
-                 String title = rs.getString(3);
-                 String author = rs.getString(4);
-                 int published_year = rs.getInt(5);
-                 String genre = rs.getString(6);
-                 String summary = rs.getString(7);
-                 int price = rs.getInt(8);
-                 int discount = rs.getInt(9);
-                 int stock = rs.getInt(10);
-                 Timestamp create_at = rs.getTimestamp(11);
-                 Timestamp update_at = rs.getTimestamp(12);
-                Product p = new Product(book_id, picture, title, author, published_year, genre, summary, price, discount, stock, create_at, update_at);
+                 String title = rs.getString(2);
+                 String author = rs.getString(3);
+                 String image = rs.getString(4);    
+                 int category_id = rs.getInt(5);
+                 int published_year = rs.getInt(6);
+                 String size = rs.getString(7);
+                 String weight = rs.getString(8);
+                 String summary = rs.getString(9);
+                 int price = rs.getInt(10);
+                 int discount = rs.getInt(11);
+                 int stock = rs.getInt(12);
+                 Timestamp create_at = rs.getTimestamp(13);
+                 Timestamp update_at = rs.getTimestamp(14);
+                Product p = new Product(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
                 vector.add(p);
             }
         } catch (SQLException ex) {

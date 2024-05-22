@@ -27,17 +27,19 @@ public class DAOCampaigns extends DBConnect{
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 
-                int compaigh_id = rs.getInt(1);
-                int user_id = rs.getInt(2);
-                int book_id = rs.getInt(3);
-                String name = rs.getString(4);
-                String description = rs.getString(5);
-                Date start_date = rs.getDate(6);
-                Date end_date = rs.getDate(7);
-                Timestamp created_at = rs.getTimestamp(8);
-                Timestamp updated_at = rs.getTimestamp(9);
-                Campaigns c = new Campaigns(compaigh_id, user_id, book_id, name, description, start_date, end_date, created_at, updated_at);
-                vector.add(c);
+                 int compaign_id = rs.getInt(1);
+                 int user_id = rs.getInt(2);
+                 int book_id = rs.getInt(3);
+                 String name = rs.getString(4);
+                 String image = rs.getString(5);
+                 String description = rs.getString(6);
+                 String summary = rs.getString(7);
+                 Date start_date = rs.getDate(8);
+                 Date end_date = rs.getDate(9);
+                 Timestamp created_at = rs.getTimestamp(10);
+                 Timestamp updated_at = rs.getTimestamp(11);
+                 Campaigns c = new Campaigns(compaign_id, user_id, book_id, name, image, description, summary, start_date, end_date, created_at, updated_at);
+                 vector.add(c);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOCampaigns.class.getName()).log(Level.SEVERE, null, ex);
@@ -46,7 +48,7 @@ public class DAOCampaigns extends DBConnect{
     }
     public static void main(String[] args) {
         DAOCampaigns daoCampaigns = new DAOCampaigns();
-        Vector<Campaigns> vectorCampains = daoCampaigns.getAll("select * from Campaigns ORDER BY compaigh_id DESC LIMIT 3");
+        Vector<Campaigns> vectorCampains = daoCampaigns.getAll("select * from Campaigns ORDER BY compaign_id DESC LIMIT 3");
         for (Campaigns vectorCampain : vectorCampains) {
             System.out.println(vectorCampain);
         }

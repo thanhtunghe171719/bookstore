@@ -12,11 +12,13 @@ import java.util.Date;
  * @author TDG
  */
 public class Campaigns {
-    private int compaigh_id;
+    private int compaign_id;
     private int user_id;
     private int book_id;
     private String name;
+    private String image;
     private String description;
+    private String summary;
     private Date start_date;
     private Date end_date;
     private Timestamp created_at;
@@ -25,12 +27,14 @@ public class Campaigns {
     public Campaigns() {
     }
 
-    public Campaigns(int compaigh_id, int user_id, int book_id, String name, String description, Date start_date, Date end_date, Timestamp created_at, Timestamp updated_at) {
-        this.compaigh_id = compaigh_id;
+    public Campaigns(int compaigh_id, int user_id, int book_id, String name, String image, String description, String summary, Date start_date, Date end_date, Timestamp created_at, Timestamp updated_at) {
+        this.compaign_id = compaigh_id;
         this.user_id = user_id;
         this.book_id = book_id;
         this.name = name;
+        this.image = image;
         this.description = description;
+        this.summary = summary;
         this.start_date = start_date;
         this.end_date = end_date;
         this.created_at = created_at;
@@ -38,11 +42,11 @@ public class Campaigns {
     }
 
     public int getCompaigh_id() {
-        return compaigh_id;
+        return compaign_id;
     }
 
-    public void setCompaigh_ai(int compaigh_id) {
-        this.compaigh_id = compaigh_id;
+    public void setCompaigh_id(int compaigh_id) {
+        this.compaign_id = compaigh_id;
     }
 
     public int getUser_id() {
@@ -69,12 +73,28 @@ public class Campaigns {
         this.name = name;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
     }
 
     public Date getStart_date() {
@@ -111,8 +131,7 @@ public class Campaigns {
 
     @Override
     public String toString() {
-        return "Campaigns{" + "compaigh_id=" + compaigh_id + ", user_id=" + user_id + ", book_id=" + book_id + ", name=" + name + ", description=" + description + ", start_date=" + start_date + ", end_date=" + end_date + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
+        return "Campaigns{" + "compaign_id=" + compaign_id + ", user_id=" + user_id + ", book_id=" + book_id + ", name=" + name + ", image=" + image + ", description=" + description + ", summary=" + summary + ", start_date=" + start_date + ", end_date=" + end_date + ", created_at=" + created_at + ", updated_at=" + updated_at + '}';
     }
-    
-    
+
 }
