@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import model.Books;
+import model.Categories;
 
 /**
  *
@@ -62,8 +63,12 @@ public class vanhoc extends HttpServlet {
         DBContext db = new DBContext();
 
         ArrayList<Books> lst_books = db.getListBooks();
+        ArrayList<Categories> lst_categories = db.getListCategories();
+        
 
         request.setAttribute("book", lst_books);
+        request.setAttribute("category", lst_categories);
+        
 
         request.getRequestDispatcher("vanhoc.jsp").forward(request, response);
     }

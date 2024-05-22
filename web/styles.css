@@ -60,13 +60,6 @@ header {
     cursor: pointer;
 }
 
-.container {
-    margin: auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 15px;
-}
 .breadcumb {
     list-style: none;
     margin: auto;
@@ -91,45 +84,145 @@ header {
     background-color: #f0f0f0;
 }
 
+.container {
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px;
+}
+
 .sidebar {
     width: 20%;
     background-color: #fff;
-    padding: 15px;
+    padding: 0px 10px 0px 10px;
+    position: relative;
 }
 
-.sidebar ol{
+.narrow-by-list {
+    margin: 0;
+}
+
+.narrow-by-list dt {
+    text-transform: uppercase;
+    cursor: pointer;
+    line-height: 100%;
+    font-weight: 600;
+    padding: 10px 0;
+}
+
+.narrow-by-list dd {
+    margin: 0;
+    padding: 0;
+}
+
+dt, dd{
+    line-height: 1.5;
+}
+
+ul, ol {
+    margin: 0;
+    padding: 0;
+}
+
+.odd ol {
+    margin: 0;
+    padding: 0;
+}
+
+.odd ol li {
     list-style: none;
+    text-decoration: none;
+}
+
+.odd ol li a {
+    color: #666;
+    padding: 0;
+    display: inline;
+    text-decoration: none
+}
+
+#current-category a {
+    margin-left: 10px;
+    color: #666;
+    padding: 0;
+    display: inline;
+    text-decoration: none
 }
 
 .content {
     width: 70%;
     background-color: #fff;
-    padding: 15px;
-}
-
-.banner {
-    display: flex;
-    justify-content: space-around;
-    margin-bottom: 20px;
-}
-
-.banner-item {
-    width: 45%;
-    text-align: center;
-    background-color: #e0f7fa;
     padding: 10px;
-    border-radius: 5px;
 }
 
-.products {
+.toolbar-top{
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.toolbar {
+    padding-top: 15px;
+    padding-left: 0px;
+}
+
+.sorter {
+    padding-left: 20px;
+}
+
+.abc-xyz {
     display: flex;
-    justify-content: space-around;
+    flex-direction: row;
+}
+
+.dropdown-text{
+    margin-right: 10px;
+}
+
+.dropdown-text p{
+    margin-top: 10px;
+    font-size: 14px;
+    color: black;
+}
+
+.sort-by{
+    padding: 0;
+    display: block;
+}
+
+.selectedBox {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+    text-align: left;
+    line-height: 30px;
+    clear: both;
+    color: #888;
+    width: 100%;
+}
+
+span.selected-order{
+    width: calc(100% - 30px);
+    padding-right: 10px;
+}
+
+.products-grid {
+    display: grid;
+    justify-content: flex-start;
 }
 
 .product-item {
-    width: 30%;
-    text-align: center;
-    background-color: #f8f8f8;
+    position: relative !important;
     padding: 10px;
-    border-radius: 5px;
+}
+
+.product-content .product-clearfix{
+    margin: 0 0 8px;
+    display: block;
+}
+
+.product-title {
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 17px;
 }

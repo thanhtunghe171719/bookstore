@@ -15,8 +15,10 @@ public class Books {
     String title;
     String author;
     String image;
+    int category_id;
     int published_year;
-    String genre;
+    String size;
+    String weight;
     String summary;
     double price;
     int discount;
@@ -27,13 +29,15 @@ public class Books {
     public Books() {
     }
 
-    public Books(int book_id, String title, String author, String image, int published_year, String genre, String summary, double price, int discount, int stock, Date create_at, Date update_at) {
+    public Books(int book_id, String title, String author, String image, int category_id, int published_year, String size, String weight, String summary, double price, int discount, int stock, Date create_at, Date update_at) {
         this.book_id = book_id;
         this.title = title;
         this.author = author;
         this.image = image;
+        this.category_id = category_id;
         this.published_year = published_year;
-        this.genre = genre;
+        this.size = size;
+        this.weight = weight;
         this.summary = summary;
         this.price = price;
         this.discount = discount;
@@ -74,6 +78,14 @@ public class Books {
         this.image = image;
     }
 
+    public int getCategory_id() {
+        return category_id;
+    }
+
+    public void setCategory_id(int category_id) {
+        this.category_id = category_id;
+    }
+
     public int getPublished_year() {
         return published_year;
     }
@@ -82,12 +94,20 @@ public class Books {
         this.published_year = published_year;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getSize() {
+        return size;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
     }
 
     public String getSummary() {

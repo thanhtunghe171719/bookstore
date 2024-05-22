@@ -37,39 +37,64 @@
             </div>
             <div class="container">
                 <div class="sidebar">
-                    <dt>NHÓM SẢN PHẨM</dt>
-                    <dd>
-                        <ol>
-                            <li><a href="booklist">Tất Cả Nhóm Sản Phẩm</a></li>
-                                <c:forEach var="category" items="${categoryList}">
-                                <li><a href="booklist?category=${category}">${category}</a></li>
-                                </c:forEach>
-                        </ol>
-                    </dd>
+                    <dl class="narrow-by-list">
+                        <dt class="odd">NHÓM SẢN PHẨM</dt>
+                        <dd class="odd">
+                            <ol>
+                                <li>
+                                    <a href="booklist">Tất Cả Nhóm Sản Phẩm</a>
+                                </li>
+                            </ol>
+                            <c:forEach var="category" items="${category}">
+                                <div id="current-category">
+                                    <a href="booklist?category=${category}">${category.getCategoryName()}</a>
+                                </div>
+                            </c:forEach>
+                        </dd>
+                    </dl>
                 </div>
                 <div class="content">
-                    <div class="banner">
-                        <div class="banner-item">
-                            <h3>Queen Of Sale</h3>
-                            <img src="sale1.jpg" alt="Sale 1">
-                            <p>-40%</p>
-                        </div>
-                        <div class="banner-item">
-                            <h3>Tân Việt Sale Chào Hè</h3>
-                            <img src="sale2.jpg" alt="Sale 2">
-                            <p>-45%</p>
+                    <div class="toolbar-top">
+                        <div class="toolbar">
+                            <div class="sorter">
+                                <div class="abc-xyz">
+                                    <div class="dropdown-text">
+                                        <p>Sắp xếp theo: </p>
+                                    </div>
+                                    <div class="sort-by">
+                                        <div class="selectedBox">
+                                            <span class="selected selected-order">Bán Chạy Tuần</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="products">
+                    <div class="products-grid">
                         <c:forEach items="${book}" var="book">
                             <div class="product-item">
-                                <img src="${book.getImage()}" alt="gocnhocuanang" border="0">
-                                <p>${book.getTitle()}</p>
-                                <p>${book.getPrice()} đ</p>
+                                <div class="product-content">
+                                    <div class="product-clearfix">
+                                        <a>
+                                            <span>
+                                                <img src="${book.getImage()}" style="width: 190px" alt="gocnhoconang" border="0">
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <h2 class="product-title">${book.getTitle()}</h2>
+                                    <p>${book.getPrice()} đ</p>
+                                </div>
                             </div>
                         </c:forEach>
                     </div>
+                </div>
+            </div>
+            <div>
+                <div class="container">
+                    <ol class="breadcumb">
+                        <li class="home"><a href="#">Trang Chủ</a></li>
+                    </ol>
                 </div>
             </div>
         </div>
