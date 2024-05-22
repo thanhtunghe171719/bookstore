@@ -11,13 +11,15 @@ package model;
 public class Categories {
     int categoryId;
     String categoryName;
+    String categoryLink;
 
     public Categories() {
     }
 
-    public Categories(int categoryId, String categoryName) {
+    public Categories(int categoryId, String categoryName, String categoryLink) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
+        this.categoryLink = categoryLink;
     }
 
     public int getCategoryId() {
@@ -34,6 +36,14 @@ public class Categories {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    public String getCategoryLink() {
+        return categoryLink;
+    }
+
+    public void setCategoryLink(String categoryLink) {
+        this.categoryLink = categoryLink;
     }
 
     

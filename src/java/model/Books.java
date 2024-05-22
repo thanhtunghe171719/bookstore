@@ -5,12 +5,16 @@
 package model;
 
 import java.util.Date;
+import java.text.DecimalFormat;
+
 
 /**
  *
  * @author skyfc
  */
 public class Books {
+    private DecimalFormat df = new DecimalFormat("#.000");
+    
     int book_id;
     String title;
     String author;
@@ -118,8 +122,8 @@ public class Books {
         this.summary = summary;
     }
 
-    public double getPrice() {
-        return price;
+    public String getPrice() {
+        return df.format(price);
     }
 
     public void setPrice(double price) {

@@ -1,3 +1,9 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -85,7 +91,8 @@ header {
 }
 
 .container {
-    margin: auto;
+    margin-left: 17em;
+    margin-right: 17em;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -123,6 +130,10 @@ dt, dd{
 ul, ol {
     margin: 0;
     padding: 0;
+}
+
+.odd{
+    padding-top: 10px;
 }
 
 .odd ol {
@@ -163,7 +174,9 @@ ul, ol {
 
 .toolbar {
     padding-top: 15px;
+    padding-bottom: 15px;
     padding-left: 0px;
+    border-bottom: 1px solid #ecebeb;
 }
 
 .sorter {
@@ -191,24 +204,36 @@ ul, ol {
 }
 
 .selectedBox {
+    display: flex;
+    justify-content: center;
     position: relative;
-    display: inline-block;
     cursor: default;
     text-align: left;
     line-height: 30px;
     clear: both;
     color: #888;
-    width: 100%;
+    min-width: 160px;
+    height: 40px;
 }
 
-span.selected-order{
-    width: calc(100% - 30px);
-    padding-right: 10px;
+.selected-order{
+    text-indent: 5px;
+    border: 1px solid #CDCFD0;
+    border-radius: 5px;
+    font-size: 14px;
+    padding: 0 10px 0 10px;
+}
+
+.product-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .products-grid {
     display: grid;
-    justify-content: flex-start;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
 }
 
 .product-item {
@@ -216,13 +241,34 @@ span.selected-order{
     padding: 10px;
 }
 
+.product-item:hover {
+    box-shadow: 1px 1px 5px #888;
+}
+
+.product-text{
+    text-decoration: none;
+    color: black;
+}
+
 .product-content .product-clearfix{
     margin: 0 0 8px;
     display: block;
 }
 
+.product-image{
+    width: 190px;
+}
+
 .product-title {
     font-weight: normal;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 17px;
+}
+
+.product-price{
+    margin-top: 4px;
+    font-size: 15px;
+    font-family: "Poppins", sans-serif;
+    color: #C92127;
+    font-weight: 600;
 }

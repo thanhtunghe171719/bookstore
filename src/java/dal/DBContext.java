@@ -45,8 +45,9 @@ public class DBContext {
             while (rs.next()) {
                 int categoryId = rs.getInt(1);
                 String categoryName = rs.getString(2);
+                String categoryLink = rs.getString(3);
 
-                Categories c = new Categories(categoryId, categoryName);
+                Categories c = new Categories(categoryId, categoryName, categoryLink);
 
                 ListCategories.add(c);
 

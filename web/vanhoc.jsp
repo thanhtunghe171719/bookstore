@@ -42,12 +42,12 @@
                         <dd class="odd">
                             <ol>
                                 <li>
-                                    <a href="booklist">Tất Cả Nhóm Sản Phẩm</a>
+                                    <a href="all-category">Tất Cả Nhóm Sản Phẩm</a>
                                 </li>
                             </ol>
                             <c:forEach var="category" items="${category}">
-                                <div id="current-category">
-                                    <a href="booklist?category=${category}">${category.getCategoryName()}</a>
+                                <div class="odd" id="current-category">
+                                    <a href="${category.getCategoryLink()}">${category.getCategoryName()}</a>
                                 </div>
                             </c:forEach>
                         </dd>
@@ -63,7 +63,11 @@
                                     </div>
                                     <div class="sort-by">
                                         <div class="selectedBox">
-                                            <span class="selected selected-order">Bán Chạy Tuần</span>
+                                            <select class="selected-order" id="sortOrder" onchange="location = this.value;">
+                                                <option value="van-hoc?sort=newest" ${sortOrder == 'newest' ? 'selected' : ''}>Mới Nhất</option>
+                                                <option value="van-hoc?sort=price-asc" ${sortOrder == 'price-asc' ? 'selected' : ''}>Giá Tăng Dần</option>
+                                                <option value="van-hoc?sort=price-desc" ${sortOrder == 'price-desc' ? 'selected' : ''}>Giá Giảm Dần</option>
+                                            </select>                                        
                                         </div>
                                     </div>
                                 </div>
@@ -71,22 +75,28 @@
                         </div>
                     </div>
 
-                    <div class="products-grid">
-                        <c:forEach items="${book}" var="book">
-                            <div class="product-item">
-                                <div class="product-content">
-                                    <div class="product-clearfix">
-                                        <a>
-                                            <span>
-                                                <img src="${book.getImage()}" style="width: 190px" alt="gocnhoconang" border="0">
-                                            </span>
-                                        </a>
+                    <div class="product-row">
+                        <div class="products-grid">
+                            <c:forEach items="${book}" var="book">
+                                <div class="product-item">
+                                    <div class="product-content">
+                                        <div class="product-clearfix">
+                                            <a href="#">
+                                                <span>
+                                                    <img class="product-image" src="${book.getImage()}" alt="gocnhoconang" border="0">
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <h2 class="product-title">
+                                            <a class="product-text" href="#">${book.getTitle()}</a>
+                                        </h2>
+                                        <div class="product-price">
+                                            <span>${book.getPrice()} đ</span>
+                                        </div>
                                     </div>
-                                    <h2 class="product-title">${book.getTitle()}</h2>
-                                    <p>${book.getPrice()} đ</p>
                                 </div>
-                            </div>
-                        </c:forEach>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
             </div>
