@@ -5,10 +5,8 @@
 
 package Controller;
 
-import Entity.Campaigns;
-import Entity.Product;
-import Model.DAOCampaigns;
-import Model.DAOProduct;
+import Entity.users;
+import Model.DAOUsers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -24,8 +22,8 @@ import java.util.Vector;
  *
  * @author TDG
  */
-@WebServlet(name="HomePage", urlPatterns={"/HomePageURL"})
-public class HomePage extends HttpServlet {
+@WebServlet(name="ChangePassWord", urlPatterns={"/ChangePassWordURL"})
+public class ChangePassWord extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,71 +33,40 @@ public class HomePage extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(true);        
         String user = (String) session.getAttribute("user");
+//        if (user == null) {
+//            response.sendRedirect("LoginManage.html");
+//        }
         request.setAttribute("user", user);
-
-        DAOProduct daoProduct = new DAOProduct();
-        DAOCampaigns daoCampaigns = new DAOCampaigns();
         
-        Vector<Campaigns> vectorCampains = daoCampaigns.getAll("select * from Campaigns ORDER BY compaign_id DESC LIMIT 3");
-        request.setAttribute("3campaigns", vectorCampains);
-
+        DAOUsers daoUser = new DAOUsers();
+        Vector<users> userInfor = daoUser.getAll("SELECT * FROM users WHERE username = 'manager';");
+        request.setAttribute("userInfor", userInfor);
         
         String service = request.getParameter("service");
         if (service == null) {
             service = "listAll";
         }
         if (service.equals("listAll")) {
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
-
             //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
+            RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
             //run(view)
             dispth.forward(request, response);
         }
-        
-        if(service.equals("sale")){
-
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
-
+        if(service.equals("changePassWord")){
+            String newPassword = request.getParameter("newPassword");
+            users u = userInfor.get(0);
+            u.setPassword(newPassword);
+            daoUser.changePassWord(u);
             //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
+            RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
             //run(view)
             dispth.forward(request, response);
         }
-        
-        if(service.equals("new")){
-            
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE book_id > 0 ORDER BY book_id DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
-
-            //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
-            //run(view)
-            dispth.forward(request, response);
-        }
-        
-        if(service.equals("sold")){
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
-                                                                "    b.weight, b.summary, b.price, b.discount,  b.stock, b.create_at, b.update_at\n" +
-                                                                "FROM books b LEFT JOIN order_items oi ON b.book_id = oi.book_id\n" +
-                                                                "GROUP BY b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
-                                                                "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.update_at\n" +
-                                                                "ORDER BY  COALESCE(SUM(oi.quantity), 0) DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
-
-            //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
-            //run(view)
-            dispth.forward(request, response);
-        }
-    }
-
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 
