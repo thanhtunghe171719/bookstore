@@ -63,7 +63,14 @@ public class vanhoc extends HttpServlet {
             throws ServletException, IOException {
         DBContext db = new DBContext();
 
-        ArrayList<Books> lst_books = db.getListBooks();
+        int totalBooks = db.getTotalBooks();
+        int page = totalBooks / 3;
+        
+        if(totalBooks % 3 != 0){
+            page++;
+        }
+        
+        ArrayList<Books> lst_books = db.getListBooksByCategory();
         ArrayList<Categories> lst_categories = db.getListCategories();
 
         String sortOrder = request.getParameter("sort");
@@ -87,6 +94,7 @@ public class vanhoc extends HttpServlet {
                 break;
         }
 
+        request.setAttribute("page", page);
         request.setAttribute("book", lst_books);
         request.setAttribute("category", lst_categories);
         request.setAttribute("sortOrder", sortOrder);

@@ -98,6 +98,12 @@
                             </c:forEach>
                         </div>
                     </div>
+
+                    <div>
+                        <c:forEach begin="1" end="${page}" var="page">
+                            <a href="#">${page}</a>
+                        </c:forEach>
+                    </div>
                 </div>
             </div>
             <div>

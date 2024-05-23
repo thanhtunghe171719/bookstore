@@ -61,12 +61,13 @@ public class DBContext {
 
     }
 
-    public ArrayList<Books> getListBooks() {
+    public ArrayList<Books> getListBooksByCategory() {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
             String sql = "SELECT * FROM query_db.books\n"
                     + "JOIN categories ON categories.category_id = books.category_id\n"
-                    + "WHERE books.category_id = 1";
+                    + "WHERE books.category_id = 1\n"
+                    + "LIMIT 4 OFFSET 0";
             PreparedStatement statement = connection.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -99,8 +100,24 @@ public class DBContext {
 
     }
 
+    public int getTotalBooks() {
+        try {
+            String sql = "SELECT COUNT(*) FROM query_db.books";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+
+    }
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         DBContext db = new DBContext();
-        System.out.println(db.getListBooks());
+        System.out.println(db.getListBooksByCategory());
     }
 }
