@@ -63,41 +63,19 @@ public class vanhoc extends HttpServlet {
             throws ServletException, IOException {
         DBContext db = new DBContext();
 
+        int index = Integer.parseInt(request.getParameter("index"));
+        String sort = request.getParameter("sort");
+
         int totalBooks = db.getTotalBooks();
-        int page = totalBooks / 3;
-        
-        if(totalBooks % 3 != 0){
-            page++;
-        }
-        
-        ArrayList<Books> lst_books = db.getListBooksByCategory();
+        int page = (totalBooks + 2) / 3; // Round up for pagination
+
+        ArrayList<Books> lst_books = db.getListBooksIndex(index, sort);
         ArrayList<Categories> lst_categories = db.getListCategories();
-
-        String sortOrder = request.getParameter("sort");
-        if (sortOrder == null) {
-            sortOrder = "normal";
-        }
-
-        switch (sortOrder) {
-            case "normal":
-                break;
-            case "newest":
-                Collections.sort(lst_books, (b1, b2) -> b2.getCreate_at().compareTo(b1.getCreate_at()));
-                break;
-            case "price-asc":
-                Collections.sort(lst_books, (b1, b2) -> Double.compare(Double.parseDouble(b1.getPrice()), Double.parseDouble(b2.getPrice())));
-                break;
-            case "price-desc":
-                Collections.sort(lst_books, (b1, b2) -> Double.compare(Double.parseDouble(b2.getPrice()), Double.parseDouble(b1.getPrice())));
-                break;
-            default:
-                break;
-        }
 
         request.setAttribute("page", page);
         request.setAttribute("book", lst_books);
         request.setAttribute("category", lst_categories);
-        request.setAttribute("sortOrder", sortOrder);
+        request.setAttribute("sort", sort);
 
         request.getRequestDispatcher("vanhoc.jsp").forward(request, response);
     }

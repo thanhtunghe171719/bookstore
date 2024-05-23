@@ -47,7 +47,7 @@
                             </ol>
                             <c:forEach var="category" items="${category}">
                                 <div class="odd" id="current-category">
-                                    <a href="${category.getCategoryLink()}">${category.getCategoryName()}</a>
+                                    <a href="${category.getCategoryLink()}?index=1&sort">${category.getCategoryName()}</a>
                                 </div>
                             </c:forEach>
                         </dd>
@@ -63,10 +63,10 @@
                                     </div>
                                     <div class="sort-by">
                                         <div class="selectedBox">
-                                            <select class="selected-order" id="sortOrder" onchange="location = this.value;">
-                                                <option value="van-hoc?sort=newest" ${sortOrder == 'newest' ? 'selected' : ''}>Mới Nhất</option>
-                                                <option value="van-hoc?sort=price-asc" ${sortOrder == 'price-asc' ? 'selected' : ''}>Giá Tăng Dần</option>
-                                                <option value="van-hoc?sort=price-desc" ${sortOrder == 'price-desc' ? 'selected' : ''}>Giá Giảm Dần</option>
+                                            <select class="selected-order" name="sort" id="sort" onchange="location = this.value;">
+                                                <option value="van-hoc?index=1&sort=newest" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ %> selected <% } %> >Mới nhất</option>
+                                                <option value="van-hoc?index=1&sort=price_asc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ %> selected <% } %> >Giá tăng dần</option>
+                                                <option value="van-hoc?index=1&sort=price_desc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ %> selected <% } %> >Giá giảm dần</option>
                                             </select>                                        
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
 
                     <div>
                         <c:forEach begin="1" end="${page}" var="page">
-                            <a href="#">${page}</a>
+                            <a href="van-hoc?index=${page}&sort=${sort}">${page}</a>
                         </c:forEach>
                     </div>
                 </div>
