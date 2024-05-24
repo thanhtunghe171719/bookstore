@@ -10,9 +10,12 @@ body {
     padding: 0;
 }
 
-header {
-    background-color: #fff;
-    border-bottom: 1px solid #e0e0e0;
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
 }
 
 .header-top {
@@ -91,8 +94,8 @@ header {
 }
 
 .container {
-    margin-left: 17em;
-    margin-right: 17em;
+    margin-left: auto;
+    margin-right: auto;
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -217,7 +220,6 @@ ul, ol {
 }
 
 .selected-order{
-    text-indent: 5px;
     border: 1px solid #CDCFD0;
     border-radius: 5px;
     font-size: 14px;
@@ -271,4 +273,29 @@ ul, ol {
     font-family: "Poppins", sans-serif;
     color: #C92127;
     font-weight: 600;
+}
+
+.index-page {
+    display: flex;
+    justify-content: center;
+    padding: 13px 15px;
+}
+
+.index-page li {
+    margin: 0 2px;
+}
+
+.index-page a {
+    color: black;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.index-page a:hover {
+    background-color: antiquewhite;
 }

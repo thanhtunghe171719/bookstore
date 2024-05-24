@@ -99,9 +99,11 @@
                         </div>
                     </div>
 
-                    <div>
+                    <div class="index-page">
                         <c:forEach begin="1" end="${page}" var="page">
-                            <a href="van-hoc?index=${page}&sort=${sort}">${page}</a>
+                            <li>
+                                <a href="van-hoc?index=${page}&sort=${sort}">${page}</a>
+                            </li>
                         </c:forEach>
                     </div>
                 </div>
