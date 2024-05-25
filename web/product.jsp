@@ -8,30 +8,13 @@
         <link rel="stylesheet" href="styles.css">
     </head>
     <body>
-        <section class="header">
-            <div class="header-top">
-                <img src="logo.png" alt="Store Logo" class="logo">
-                <div class="header-right">
-                    <div class="icons">
-                        <a href="#">Thông Báo</a>
-                        <a href="#">Giỏ Hàng</a>
-                        <a href="#">Tài Khoản</a>
-                    </div>
-                    <div class="search-bar">
-                        <input type="text" placeholder="Tìm kiếm">
-                        <button>Search</button>
-                    </div>
-                    <div class="language">
-                        <button>VN</button>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <jsp:include page="header.jsp"/>
+
         <div class="main">
             <div>
                 <div class="container">
                     <ol class="breadcumb">
-                        <li class="home"><a href="#">Trang Chủ</a></li>
+                        <li class="home"><span>&nbsp;</span></li>
                     </ol>
                 </div>
             </div>
@@ -42,14 +25,15 @@
                         <dd class="odd">
                             <ol>
                                 <li>
-                                    <a href="all-category">Tất Cả Nhóm Sản Phẩm</a>
+                                    <a href="product">Tất Cả Nhóm Sản Phẩm</a>
                                 </li>
                             </ol>
                             <c:forEach var="category" items="${category}">
                                 <div class="odd" id="current-category">
-                                    <a href="${category.getCategoryLink()}?index=1&sort">${category.getCategoryName()}</a>
+                                    <a class="${tag == category.categoryId ? "active-category" : "normal-category"}" href="product?categoryid=${category.categoryId}">${category.getCategoryName()}</a>
                                 </div>
                             </c:forEach>
+                            <input type="hidden" id="currentCategoryId" value="${param.categoryid}">
                         </dd>
                     </dl>
                 </div>
@@ -64,16 +48,18 @@
                                     <div class="sort-by">
                                         <div class="selectedBox">
                                             <select class="selected-order" name="sort" id="sort" onchange="location = this.value;">
-                                                <option value="van-hoc?index=1&sort=newest" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ %> selected <% } %> >Mới nhất</option>
-                                                <option value="van-hoc?index=1&sort=price_asc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ %> selected <% } %> >Giá tăng dần</option>
-                                                <option value="van-hoc?index=1&sort=price_desc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ %> selected <% } %> >Giá giảm dần</option>
-                                            </select>                                        
+                                                <option value="product?categoryid=${param.categoryid}&index=1&sort=newest" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ %> selected <% } %>>Mới nhất</option>
+                                                <option value="product?categoryid=${param.categoryid}&index=1&sort=price_asc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ %> selected <% } %>>Giá tăng dần</option>
+                                                <option value="product?categoryid=${param.categoryid}&index=1&sort=price_desc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ %> selected <% } %>>Giá giảm dần</option>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <input type="hidden" id="currentCategoryId" value="${param.categoryid}">
 
                     <div class="product-row">
                         <div class="products-grid">
@@ -83,7 +69,7 @@
                                         <div class="product-clearfix">
                                             <a href="#">
                                                 <span>
-                                                    <img class="product-image" src="${book.getImage()}" alt="gocnhoconang" border="0">
+                                                    <img class="product-image" src="${book.getImage()}" alt="${book.getTitle()}" border="0">
                                                 </span>
                                             </a>
                                         </div>
@@ -100,21 +86,30 @@
                     </div>
 
                     <div class="index-page">
+                        <c:if test="${pagetag > 1}">
+                            <a class="icon-turn-left" href="product?categoryid=${param.categoryid}&index=${pagetag - 1}">&nbsp;</a>
+                        </c:if>
                         <c:forEach begin="1" end="${page}" var="page">
                             <li>
-                                <a href="van-hoc?index=${page}&sort=${sort}">${page}</a>
+                                <a class="${pagetag == page ? "active-page" : ""}" href="product?categoryid=${param.categoryid}&index=${page}">${page}</a>
                             </li>
                         </c:forEach>
+                        <c:if test="${pagetag < page}">
+                            <a class="icon-turn-right" href="product?categoryid=${param.categoryid}&index=${pagetag + 1}">&nbsp;</a>
+                        </c:if>
                     </div>
                 </div>
             </div>
+
             <div>
                 <div class="container">
                     <ol class="breadcumb">
-                        <li class="home"><a href="#">Trang Chủ</a></li>
+                        <li class="home"><span>&nbsp;</span></li>
                     </ol>
                 </div>
             </div>
         </div>
+
+        <jsp:include page="footer.jsp"/>
     </body>
 </html>

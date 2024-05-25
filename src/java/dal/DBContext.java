@@ -36,38 +36,25 @@ public class DBContext {
         }
     }
 
-    public ArrayList<Categories> getListCategories() {
-        try {
-            ArrayList<Categories> ListCategories = new ArrayList<Categories>();
-            String sql = "SELECT * FROM query_db.categories;";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            ResultSet rs = statement.executeQuery();
-            while (rs.next()) {
-                int categoryId = rs.getInt(1);
-                String categoryName = rs.getString(2);
-                String categoryLink = rs.getString(3);
-
-                Categories c = new Categories(categoryId, categoryName, categoryLink);
-
-                ListCategories.add(c);
-
-            }
-            return ListCategories;
-        } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return null;
-
-    }
-
-    public ArrayList<Books> getListBooksByCategory(int index) {
+    public ArrayList<Books> getListBooks(int index, String sort) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
-            String sql = "SELECT * FROM query_db.books\n"
-                    + "JOIN categories ON categories.category_id = books.category_id\n"
-                    + "WHERE books.category_id = 1\n"
-                    + "LIMIT 4 OFFSET ?";
+            String sql = "SELECT * FROM query_db.books ";
+            switch (sort) {
+                case "newest":
+                    sql += "ORDER BY published_year DESC ";
+                    break;
+                case "price_asc":
+                    sql += "ORDER BY price ASC ";
+                    break;
+                case "price_desc":
+                    sql += "ORDER BY price DESC ";
+                    break;
+                default:
+                    // Default sorting logic, if needed
+                    break;
+            }
+            sql += "LIMIT 4 OFFSET ?;";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setInt(1, (index - 1) * 3);
             ResultSet rs = statement.executeQuery();
@@ -101,29 +88,27 @@ public class DBContext {
 
     }
 
-    public ArrayList<Books> getListBooksIndex(int index, String sort) {
+    public ArrayList<Books> getListBooksByCategory(int categoryId, int index, String sort) {
         try {
-            ArrayList<Books> ListBooks = new ArrayList<Books>();
+            ArrayList<Books> ListBooksByCategory = new ArrayList<Books>();
             String sql = "SELECT * FROM query_db.books WHERE category_id = ? ";
-
             switch (sort) {
+                case "newest":
+                    sql += "ORDER BY published_year DESC ";
+                    break;
                 case "price_asc":
                     sql += "ORDER BY price ASC ";
                     break;
                 case "price_desc":
                     sql += "ORDER BY price DESC ";
                     break;
-                case "newest":
-                    sql += "ORDER BY update_at DESC ";
-                    break;
                 default:
+                    // Default sorting logic, if needed
                     break;
             }
-
-            sql += "LIMIT 4 OFFSET ?";
-
+            sql += "LIMIT 4 OFFSET ?;";
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setInt(1, 1); // Assuming category_id 1 is for vanhoc
+            statement.setInt(1, categoryId);
             statement.setInt(2, (index - 1) * 3);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -144,10 +129,35 @@ public class DBContext {
 
                 Books b = new Books(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
 
-                ListBooks.add(b);
+                ListBooksByCategory.add(b);
 
             }
-            return ListBooks;
+            return ListBooksByCategory;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+
+    }
+
+    public ArrayList<Categories> getListCategories() {
+        try {
+            ArrayList<Categories> ListCategories = new ArrayList<Categories>();
+            String sql = "SELECT * FROM query_db.categories;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int categoryId = rs.getInt(1);
+                String categoryName = rs.getString(2);
+                String categoryLink = rs.getString(3);
+
+                Categories c = new Categories(categoryId, categoryName, categoryLink);
+
+                ListCategories.add(c);
+
+            }
+            return ListCategories;
         } catch (SQLException ex) {
             Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -158,8 +168,26 @@ public class DBContext {
 
     public int getTotalBooks() {
         try {
-            String sql = "SELECT COUNT(*) FROM query_db.books";
+            String sql = "SELECT COUNT(*) FROM query_db.books;";
             PreparedStatement statement = connection.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return 0;
+
+    }
+
+    public int getTotalBooksByCategory(int categoryId) {
+        try {
+            String sql = "SELECT COUNT(*) FROM query_db.books\n"
+                    + "WHERE books.category_id = ?;";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setInt(1, categoryId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -174,6 +202,6 @@ public class DBContext {
 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         DBContext db = new DBContext();
-        System.out.println(db.getListBooksByCategory(1));
+        System.out.println(db);
     }
 }

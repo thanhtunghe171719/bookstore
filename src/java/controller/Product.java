@@ -21,7 +21,7 @@ import model.Categories;
  *
  * @author ngdin
  */
-public class vanhoc extends HttpServlet {
+public class Product extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -63,21 +63,53 @@ public class vanhoc extends HttpServlet {
             throws ServletException, IOException {
         DBContext db = new DBContext();
 
-        int index = Integer.parseInt(request.getParameter("index"));
-        String sort = request.getParameter("sort");
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
 
-        int totalBooks = db.getTotalBooks();
+        String sort = request.getParameter("sort");
+        if(sort == null){
+            sort = "default";
+        }
+
+        String categoryidParam = request.getParameter("categoryid");
+        if (categoryidParam == null) {
+            categoryidParam = "0";
+        }
+
+        ArrayList<Books> lst_books;
+        int totalBooks = 0;
+
+        if (categoryidParam == "0") {
+            lst_books = db.getListBooks(index, sort);
+            totalBooks = db.getTotalBooks();
+        } else {
+            try {
+                int categoryid = Integer.parseInt(categoryidParam);
+                lst_books = db.getListBooksByCategory(categoryid, index, sort);
+                totalBooks = db.getTotalBooksByCategory(categoryid);
+
+            } catch (NumberFormatException e) {
+                // Handle the error, maybe set a default category or show an error message
+                totalBooks = db.getTotalBooks();
+                lst_books = db.getListBooks(index, sort); // Default behavior if parsing fails
+            }
+        }
+
         int page = (totalBooks + 2) / 3; // Round up for pagination
 
-        ArrayList<Books> lst_books = db.getListBooksIndex(index, sort);
+        request.setAttribute("book", lst_books);
+
         ArrayList<Categories> lst_categories = db.getListCategories();
 
         request.setAttribute("page", page);
-        request.setAttribute("book", lst_books);
+        request.setAttribute("pagetag", index);
         request.setAttribute("category", lst_categories);
         request.setAttribute("sort", sort);
 
-        request.getRequestDispatcher("vanhoc.jsp").forward(request, response);
+        request.getRequestDispatcher("product.jsp").forward(request, response);
     }
 
     /**
