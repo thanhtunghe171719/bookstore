@@ -11,11 +11,11 @@
         <jsp:include page="header.jsp"/>
 
         <div class="main">
-            <div>
-                <div class="container">
-                    <ol class="breadcumb">
-                        <li class="home"><span>&nbsp;</span></li>
-                    </ol>
+            <div class="container">
+                <div class="search_container">
+                    <form action="search" method="post">
+                        <input name="search" class="search_input" type="text" placeholder="Search">
+                    </form>
                 </div>
             </div>
             <div class="container">
