@@ -141,6 +141,44 @@ public class DBContext {
 
     }
 
+    public ArrayList<Books> getBookBySearch(String searchText) {
+        try {
+            ArrayList<Books> ListBooks = new ArrayList<Books>();
+            String sql = "SELECT * FROM query_db.books\n"
+                    + "WHERE books.title like ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, "%" + searchText + "%");
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()) {
+                int book_id = rs.getInt(1);
+                String title = rs.getString(2);
+                String author = rs.getString(3);
+                String image = rs.getString(4);
+                int category_id = rs.getInt(5);
+                int published_year = rs.getInt(6);
+                String size = rs.getString(7);
+                String weight = rs.getString(8);
+                String summary = rs.getString(9);
+                double price = rs.getDouble(10);
+                int discount = rs.getInt(11);
+                int stock = rs.getInt(12);
+                Date create_at = rs.getDate(13);
+                Date update_at = rs.getDate(14);
+
+                Books b = new Books(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
+
+                ListBooks.add(b);
+
+            }
+            return ListBooks;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return null;
+
+    }
+
     public ArrayList<Categories> getListCategories() {
         try {
             ArrayList<Categories> ListCategories = new ArrayList<Categories>();

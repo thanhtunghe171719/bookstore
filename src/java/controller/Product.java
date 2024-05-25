@@ -70,7 +70,7 @@ public class Product extends HttpServlet {
         int index = Integer.parseInt(indexPage);
 
         String sort = request.getParameter("sort");
-        if(sort == null){
+        if (sort == null) {
             sort = "default";
         }
 
@@ -100,10 +100,9 @@ public class Product extends HttpServlet {
 
         int page = (totalBooks + 2) / 3; // Round up for pagination
 
-        request.setAttribute("book", lst_books);
-
         ArrayList<Categories> lst_categories = db.getListCategories();
 
+        request.setAttribute("book", lst_books);
         request.setAttribute("page", page);
         request.setAttribute("pagetag", index);
         request.setAttribute("category", lst_categories);
