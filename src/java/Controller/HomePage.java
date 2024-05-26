@@ -5,9 +5,9 @@
 
 package Controller;
 
-import Entity.Campaigns;
+import Entity.Slider;
 import Entity.Product;
-import Model.DAOCampaigns;
+import Model.DAOSlider;
 import Model.DAOProduct;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -42,10 +42,10 @@ public class HomePage extends HttpServlet {
         request.setAttribute("user", user);
 
         DAOProduct daoProduct = new DAOProduct();
-        DAOCampaigns daoCampaigns = new DAOCampaigns();
+        DAOSlider daoSlider = new DAOSlider();
         
-        Vector<Campaigns> vectorCampains = daoCampaigns.getAll("select * from Campaigns ORDER BY compaign_id DESC LIMIT 3");
-        request.setAttribute("3campaigns", vectorCampains);
+        Vector<Slider> vectorCampains = daoSlider.getAll("select * from slider ORDER BY slider_id DESC LIMIT 3");
+        request.setAttribute("3slider", vectorCampains);
 
         
         String service = request.getParameter("service");
@@ -86,11 +86,11 @@ public class HomePage extends HttpServlet {
         
         if(service.equals("sold")){
             Vector<Product> vectorProducts = daoProduct.getAll("SELECT b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
-                                                                "    b.weight, b.summary, b.price, b.discount,  b.stock, b.create_at, b.update_at\n" +
-                                                                "FROM books b LEFT JOIN order_items oi ON b.book_id = oi.book_id\n" +
+                                                                "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.updated_at \n" +
+                                                                "FROM books b LEFT JOIN order_items oi ON b.book_id = oi.book_id \n" +
                                                                 "GROUP BY b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
-                                                                "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.update_at\n" +
-                                                                "ORDER BY  COALESCE(SUM(oi.quantity), 0) DESC LIMIT 6;");
+                                                                "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.updated_at \n" +
+                                                                "ORDER BY COALESCE(SUM(oi.quantity), 0) DESC LIMIT 6;");
             request.setAttribute("6products", vectorProducts);
 
             //select(jsp)   

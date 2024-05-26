@@ -43,7 +43,7 @@ public class ChangePassWord extends HttpServlet {
         request.setAttribute("user", user);
         
         DAOUsers daoUser = new DAOUsers();
-        Vector<users> userInfor = daoUser.getAll("SELECT * FROM users WHERE username = 'manager';");
+        Vector<users> userInfor = daoUser.getAll("SELECT * FROM users WHERE fullname = "+user+";");
         request.setAttribute("userInfor", userInfor);
         
         String service = request.getParameter("service");
@@ -66,6 +66,7 @@ public class ChangePassWord extends HttpServlet {
             //run(view)
             dispth.forward(request, response);
         }
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

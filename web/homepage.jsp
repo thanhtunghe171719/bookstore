@@ -55,7 +55,7 @@
         </div>
 
         <% 
-            Vector<Campaigns> vectorCam = (Vector<Campaigns>) request.getAttribute("3campaigns");
+            Vector<Slider> vectorCam = (Vector<Slider>) request.getAttribute("3slider");
             
         %> 
         
@@ -67,7 +67,7 @@
                         <div>
                             <img src="<%= vectorCam.get(0).getImage()%>"> 
                             <div class="read_more" style="display: none" onclick="showSlide(0)">
-                                <p style="font-size: 20px;width: 400px"><%= vectorCam.get(0).getDescription()%></p>
+                                <p style="font-size: 20px;width: 400px"><%= vectorCam.get(0).getTitle()%></p>
                                 <a href="#">
                                     Read More
                                 </a>
@@ -78,7 +78,7 @@
                         <div>
                             <img src="<%= vectorCam.get(1).getImage()%>">
                             <div class="read_more"onclick="showSlide(1)">
-                                <p style="font-size: 20px;width:400px "><%= vectorCam.get(1).getDescription()%></p>
+                                <p style="font-size: 20px;width:400px "><%= vectorCam.get(1).getTitle()%></p>
                                 <a href="#">
                                     Read More
                                 </a>
@@ -89,7 +89,7 @@
                         <div>
                             <img src="<%= vectorCam.get(2).getImage()%>">
                             <div class="read_more" style="display: none" onclick="showSlide(2)">
-                                <p style="font-size: 20px;width:400px "><%= vectorCam.get(2).getDescription()%></p>
+                                <p style="font-size: 20px;width:400px "><%= vectorCam.get(2).getTitle()%></p>
                                 <a href="#">
                                     Read More
                                 </a>
@@ -136,7 +136,7 @@
             }
             out.println("<tr>");
         }
-        int originalPrice = product.getPrice();
+        int originalPrice = product.getPrice().intValue();
         int discount = product.getDiscount();
         double discountedPrice = originalPrice - (originalPrice * discount / 100.0);
 %>

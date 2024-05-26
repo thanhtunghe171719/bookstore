@@ -10,49 +10,39 @@ import java.sql.Timestamp;
  * @author TDG
  */
 public class users {
-    private int user_id;
-    private String username;
-    private String password;
+    private int userId;
     private String email;
-    private String role;
-    private Timestamp create_at;
-    private Timestamp update_at;
+    private String phone;
+    private String password;
+    private int roleId;
+    private String fullname;
+    private String gender;
+    private String address;
+    private Timestamp createAt;
+    private Timestamp updatedAt;
 
     public users() {
     }
 
-    public users(int user_id, String username, String password, String email, String role, Timestamp create_at, Timestamp update_at) {
-        this.user_id = user_id;
-        this.username = username;
-        this.password = password;
+    public users(int userId, String email, String phone, String password, int roleId, String fullname, String gender, String address, Timestamp createAt, Timestamp updatedAt) {
+        this.userId = userId;
         this.email = email;
-        this.role = role;
-        this.create_at = create_at;
-        this.update_at = update_at;
-    }
-
-    public int getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.phone = phone;
         this.password = password;
+        this.roleId = roleId;
+        this.fullname = fullname;
+        this.gender = gender;
+        this.address = address;
+        this.createAt = createAt;
+        this.updatedAt = updatedAt;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -63,33 +53,75 @@ public class users {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public Timestamp getCreate_at() {
-        return create_at;
+    public String getPassword() {
+        return password;
     }
 
-    public void setCreate_at(Timestamp create_at) {
-        this.create_at = create_at;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public Timestamp getUpdate_at() {
-        return update_at;
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setUpdate_at(Timestamp update_at) {
-        this.update_at = update_at;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
     public String toString() {
-        return "users{" + "user_id=" + user_id + ", username=" + username + ", password=" + password + ", email=" + email + ", role=" + role + ", create_at=" + create_at + ", update_at=" + update_at + '}';
+        return "users{" + "userId=" + userId + ", email=" + email + ", phone=" + phone + ", password=" + password + ", roleId=" + roleId + ", fullname=" + fullname + ", gender=" + gender + ", address=" + address + ", createAt=" + createAt + ", updatedAt=" + updatedAt + '}';
     }
     
+    
+
 }

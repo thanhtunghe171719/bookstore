@@ -23,6 +23,14 @@
                 document.getElementById('oldPasswordResult').innerHTML = "<span style='color:red;'>✘</span>";
             }
 
+            //check old password different new password
+            if (newPassword !== "" && newPassword !== storedPassword) {
+                document.getElementById('newPasswordResult').innerHTML = "<span style='color:green;'>✔</span>";
+                newPasswordValid = true;
+            } else {
+                document.getElementById('newPasswordResult').innerHTML = "<span style='color:red;'>✘</span>";
+            }
+            
             // Check new password and confirm new password match
             if (newPassword !== "" && newPassword === confirmNewPassword) {
                 document.getElementById('confirmNewPasswordResult').innerHTML = "<span style='color:green;'>✔</span>";
@@ -40,4 +48,9 @@
                 document.getElementById('saveButton').style.display = 'none';
                 document.getElementById('check-3-password').innerHTML = "<span style='color:red;'>empty or input wrong</span>";
             }
+        }
+        
+        function showAlert() {
+            alert("Change successful");
+            return true;
         }

@@ -63,15 +63,15 @@
                         Vector<users> userInfor = (Vector<users>) request.getAttribute("userInfor");
                     %>     
                         <div class="user-setting">
-                            <div class="menu-setting-user">
+<!--                            <div class="menu-setting-user">
                                 <div style="padding-bottom: 50px;"><div class="circle-user">PICTURE</div></div>
                                 <ol>
                                     <li><a href="#">1.profile user</a></li>
                                     <li><a href="#">2.change password</a></li>
                                 </ol>
-                            </div>     
+                            </div>     -->
                             <div class="content-user-setting">
-                                <form action="ChangePassWordURL?service=changePassWord" method="get">
+                                <form action="ChangePassWordURL?service=changePassWord" method="get"  onsubmit="return showAlert()">
                                     <table class="table-change-password">
                                         <caption style="font-size: 20px;padding: 10px;font-weight: bold;">Change Password</caption>
                                         <tr>
@@ -92,7 +92,7 @@
                                         <tr>
                                             <td id="check-3-password"></td>
                                             <td colspan="3" style="text-align: center;">
-                                                <input type="submit" id="saveButton" class="save-button" name="submit" value="save">
+                                                <input type="submit" id="saveButton" class="save-button" name="service" value="changePassWord">
                                             </td>
                                         </tr>
                                     </table>

@@ -5,8 +5,9 @@
 
 package Model;
 
-import Entity.Campaigns;
+import Entity.Slider;
 import Entity.Product;
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -25,25 +26,28 @@ public class DAOProduct extends DBConnect{
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
-                 int book_id = rs.getInt(1);
-                 String title = rs.getString(2);
-                 String author = rs.getString(3);
-                 String image = rs.getString(4);    
-                 int category_id = rs.getInt(5);
-                 int published_year = rs.getInt(6);
-                 String size = rs.getString(7);
-                 String weight = rs.getString(8);
-                 String summary = rs.getString(9);
-                 int price = rs.getInt(10);
-                 int discount = rs.getInt(11);
-                 int stock = rs.getInt(12);
-                 Timestamp create_at = rs.getTimestamp(13);
-                 Timestamp update_at = rs.getTimestamp(14);
-                Product p = new Product(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
+                int bookId = rs.getInt("book_id");
+                String title = rs.getString("title");
+                String author = rs.getString("author");
+                String image = rs.getString("image");
+                int categoryId = rs.getInt("category_id");
+                String publishingHouse = rs.getString("publishing_house");
+                int publishedYear = rs.getInt("published_year");
+                String size = rs.getString("size");
+                String weight = rs.getString("weight");
+                String summary = rs.getString("summary");
+                BigDecimal price = rs.getBigDecimal("price"); 
+                Integer rating = rs.getObject("rating") != null ? rs.getInt("rating") : null;
+                Integer discount = rs.getObject("discount") != null ? rs.getInt("discount") : null;
+                int stock = rs.getInt("stock");
+                Timestamp createAt = rs.getTimestamp("create_at");
+                Timestamp updatedAt = rs.getTimestamp("updated_at");
+                Product p = new Product(bookId, title, author, image, categoryId, publishingHouse, 
+                        publishedYear, size, weight, summary, price, rating, discount, stock, createAt, updatedAt);
                 vector.add(p);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DAOCampaigns.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DAOSlider.class.getName()).log(Level.SEVERE, null, ex);
         }
         return vector;
     }

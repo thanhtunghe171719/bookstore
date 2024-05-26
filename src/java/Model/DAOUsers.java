@@ -28,14 +28,18 @@ public class DAOUsers extends DBConnect{
             ResultSet rs = state.executeQuery(sql);
             while (rs.next()) {
                 
-                 int user_id = rs.getInt(1);
-                 String username = rs.getString(2);
-                 String password = rs.getString(3);
-                 String email = rs.getString(4);
-                 String role = rs.getString(5);
-                 Timestamp create_at = rs.getTimestamp(6);
-                 Timestamp update_at = rs.getTimestamp(7);    
-                 users u = new users(user_id, username, password, email, role, create_at, update_at);
+                int userId = rs.getInt("user_id");
+                String email = rs.getString("email");
+                String phone = rs.getString("phone");
+                String password = rs.getString("password");
+                int roleId = rs.getInt("role_id");
+                String fullname = rs.getString("fullname");
+                String gender = rs.getString("gender");
+                String address = rs.getString("address");
+                Timestamp createAt = rs.getTimestamp("create_at");
+                Timestamp updatedAt = rs.getTimestamp("updated_at");
+   
+                 users u = new users(userId, email, phone, password, roleId, fullname, gender, address, createAt, updatedAt);
                  vector.add(u);
             }
         } catch (SQLException ex) {
@@ -47,25 +51,31 @@ public class DAOUsers extends DBConnect{
     public int changePassWord(users obj) {
         int n = 0;
 
-        String sql = "UPDATE `query_db`.`users`\n" +
+        String sql = "UPDATE `checksql`.`users`\n" +
                     "SET\n" +
-                    "`username` = ?,\n" +
-                    "`password` = ?,\n" +
                     "`email` = ?,\n" +
-                    "`role` = ?,\n" +
+                    "`phone` = ?,\n" +
+                    "`password` = ?,\n" +
+                    "`role_id` = ?,\n" +
+                    "`fullname` = ?,\n" +
+                    "`gender` = ?,\n" +
+                    "`address` = ?,\n" +
                     "`create_at` = ?,\n" +
-                    "`update_at` = ?\n" +
+                    "`updated_at` = ?\n" +
                     "WHERE `user_id` = ?;";
         try {
             PreparedStatement pre = conn.prepareStatement(sql);
 
-            pre.setString(1, obj.getUsername());
-            pre.setString(2, obj.getPassword());
-            pre.setString(3, obj.getEmail());
-            pre.setString(4, obj.getRole());
-            pre.setTimestamp(5, obj.getCreate_at());
-            pre.setTimestamp(6, obj.getUpdate_at());
-            pre.setInt(7, obj.getUser_id());
+            pre.setString(1, obj.getEmail());
+            pre.setString(2, obj.getPhone());
+            pre.setString(3, obj.getPassword());
+            pre.setInt(4, obj.getRoleId());
+            pre.setString(5, obj.getFullname());
+            pre.setString(6, obj.getGender());
+            pre.setString(7, obj.getAddress());
+            pre.setTimestamp(8, obj.getCreateAt());
+            pre.setTimestamp(9, obj.getUpdatedAt());
+            pre.setInt(10, obj.getUserId());
             n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsers.class.getName()).log(Level.SEVERE, null, ex);
@@ -75,7 +85,7 @@ public class DAOUsers extends DBConnect{
     
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
-        Vector<users> vector = dao.getAll("SELECT * FROM users WHERE username = 'manager';");
+        Vector<users> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");
         for (users object : vector) {
             System.out.println(object);
         }

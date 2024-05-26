@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Entity;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
@@ -10,47 +11,51 @@ import java.sql.Timestamp;
  * @author TDG
  */
 public class Product {
-    private int book_id;
+    private int bookId;
     private String title;
     private String author;
-    private String image;    
-    private int category_id;
-    private int published_year;
+    private String image;
+    private int categoryId;
+    private String publishingHouse;
+    private int publishedYear;
     private String size;
     private String weight;
     private String summary;
-    private int price;
-    private int discount;
+    private BigDecimal price;
+    private Integer rating;
+    private Integer discount;
     private int stock;
-    private Timestamp create_at;
-    private Timestamp update_at;
+    private Timestamp createAt;
+    private Timestamp updatedAt;
 
     public Product() {
     }
 
-    public Product(int book_id, String title, String author, String image, int category_id, int published_year, String size, String weight, String summary, int price, int discount, int stock, Timestamp create_at, Timestamp update_at) {
-        this.book_id = book_id;
+    public Product(int bookId, String title, String author, String image, int categoryId, String publishingHouse, int publishedYear, String size, String weight, String summary, BigDecimal price, Integer rating, Integer discount, int stock, Timestamp createAt, Timestamp updatedAt) {
+        this.bookId = bookId;
         this.title = title;
         this.author = author;
         this.image = image;
-        this.category_id = category_id;
-        this.published_year = published_year;
+        this.categoryId = categoryId;
+        this.publishingHouse = publishingHouse;
+        this.publishedYear = publishedYear;
         this.size = size;
         this.weight = weight;
         this.summary = summary;
         this.price = price;
+        this.rating = rating;
         this.discount = discount;
         this.stock = stock;
-        this.create_at = create_at;
-        this.update_at = update_at;
+        this.createAt = createAt;
+        this.updatedAt = updatedAt;
     }
 
-    public int getBook_id() {
-        return book_id;
+    public int getBookId() {
+        return bookId;
     }
 
-    public void setBook_id(int book_id) {
-        this.book_id = book_id;
+    public void setBookId(int bookId) {
+        this.bookId = bookId;
     }
 
     public String getTitle() {
@@ -77,20 +82,28 @@ public class Product {
         this.image = image;
     }
 
-    public int getCategory_id() {
-        return category_id;
+    public int getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(int category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
     }
 
-    public int getPublished_year() {
-        return published_year;
+    public String getPublishingHouse() {
+        return publishingHouse;
     }
 
-    public void setPublished_year(int published_year) {
-        this.published_year = published_year;
+    public void setPublishingHouse(String publishingHouse) {
+        this.publishingHouse = publishingHouse;
+    }
+
+    public int getPublishedYear() {
+        return publishedYear;
+    }
+
+    public void setPublishedYear(int publishedYear) {
+        this.publishedYear = publishedYear;
     }
 
     public String getSize() {
@@ -117,19 +130,27 @@ public class Product {
         this.summary = summary;
     }
 
-    public int getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public int getDiscount() {
+    public Integer getRating() {
+        return rating;
+    }
+
+    public void setRating(Integer rating) {
+        this.rating = rating;
+    }
+
+    public Integer getDiscount() {
         return discount;
     }
 
-    public void setDiscount(int discount) {
+    public void setDiscount(Integer discount) {
         this.discount = discount;
     }
 
@@ -141,25 +162,25 @@ public class Product {
         this.stock = stock;
     }
 
-    public Timestamp getCreate_at() {
-        return create_at;
+    public Timestamp getCreateAt() {
+        return createAt;
     }
 
-    public void setCreate_at(Timestamp create_at) {
-        this.create_at = create_at;
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
     }
 
-    public Timestamp getUpdate_at() {
-        return update_at;
+    public Timestamp getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setUpdate_at(Timestamp update_at) {
-        this.update_at = update_at;
+    public void setUpdatedAt(Timestamp updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
     public String toString() {
-        return "Product{" + "book_id=" + book_id + ", title=" + title + ", author=" + author + ", image=" + image + ", category_id=" + category_id + ", published_year=" + published_year + ", size=" + size + ", weight=" + weight + ", summary=" + summary + ", price=" + price + ", discount=" + discount + ", stock=" + stock + ", create_at=" + create_at + ", update_at=" + update_at + '}';
+        return "Product{" + "bookId=" + bookId + ", title=" + title + ", author=" + author + ", image=" + image + ", categoryId=" + categoryId + ", publishingHouse=" + publishingHouse + ", publishedYear=" + publishedYear + ", size=" + size + ", weight=" + weight + ", summary=" + summary + ", price=" + price + ", rating=" + rating + ", discount=" + discount + ", stock=" + stock + ", createAt=" + createAt + ", updatedAt=" + updatedAt + '}';
     }
-
+    
 }
