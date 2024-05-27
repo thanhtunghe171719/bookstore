@@ -42,7 +42,6 @@
                     <%
                         if (user != null) {
                     %>
-                    <li><a href="ChangePassWordURL">Hello, <%= user %></a></li>
                     <%
                         } else {
                     %>
@@ -195,6 +194,6 @@
     <!--JavaScript-->
     <!-- slide js -->
     <script src="js/slideHomePage.js"></script>
-        
+ 
     </body>
 </html>
