@@ -22,14 +22,14 @@
         <div class="container-header" >
             <!--logo-->
             <div class="logo-column">
-                <a href="HomePageURL" >BOOKSHOP</a>
+                <a href="home" >BOOKSHOP</a>
             </div>
 
             <!--menu-->
             <div class="menu">
                 <ul>
-                    <li><a href="HomePageURL">Home</a></li>
-                    <li><a href="#">Product</a></li>
+                    <li><a href="home">Home</a></li>
+                    <li><a href="product">Product</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="#">Cart</a></li>
                 </ul>
