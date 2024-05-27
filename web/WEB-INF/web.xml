@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
+    <!-- Cấu hình servlet HomePage -->
+    <servlet>
+        <servlet-name>HomePage</servlet-name>
+        <servlet-class>Controller.HomePage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomePage</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+
+    <!-- Cấu hình servlet ChangePassWord -->
+    <servlet>
+        <servlet-name>ChangePassWord</servlet-name>
+        <servlet-class>Controller.ChangePassWord</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChangePassWord</servlet-name>
+        <url-pattern>/change-password</url-pattern>
+    </servlet-mapping>
+
+    <!-- Cấu hình servlet CartDetails -->
+    <servlet>
+        <servlet-name>CartDetails</servlet-name>
+        <servlet-class>Controller.CartDetails</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CartDetails</servlet-name>
+        <url-pattern>/cart-details</url-pattern>
+    </servlet-mapping>
+</web-app>
