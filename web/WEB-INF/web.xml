@@ -29,4 +29,13 @@
         <servlet-name>CartDetails</servlet-name>
         <url-pattern>/cart-details</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>product</servlet-name>
+        <servlet-class>controller.Product</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>product</servlet-name>
+        <url-pattern>/product</url-pattern>
+    </servlet-mapping>
 </web-app>
