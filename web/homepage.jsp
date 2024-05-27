@@ -38,14 +38,26 @@
             <!--user info-->
             <div class="user-info">
                 <ul>
-                    <% String user = (String) request.getAttribute("user"); %>
+                    <% users user = (users) request.getAttribute("user"); %>
                     <%
                         if (user != null) {
                     %>
+                    <li>
+                        <a href="change-password">Hello, <%= user.getFullname() %></a>
+                        <table>
+                            <tr>
+                                <td >
+                                    <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
+                                    <a href="#" style="font-size: 15px;">user profile</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                    
                     <%
                         } else {
                     %>
-                        <li><a href="ChangePassWordURL">Login</a></li>
+                        <li><a href="LoginController">Login</a></li>
                     <%
                         }
                     %>
@@ -157,7 +169,6 @@
                     </div>
                     <div class="add-cart">
                         <a href="#">Detail</a>
-                        <a href="#">Buy</a>
                     </div>
                 </div>
             </div>

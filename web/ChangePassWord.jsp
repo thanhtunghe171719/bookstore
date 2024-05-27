@@ -26,13 +26,13 @@
                 <div class="container-header" >
                     <!--logo-->
                     <div class="logo-column">
-                        <a href="HomePageURL" >BOOKSHOP</a>
+                        <a href="home" >BOOKSHOP</a>
                     </div>
 
                     <!--menu-->
                     <div class="menu">
                         <ul>
-                            <li><a href="HomePageURL">Home</a></li>
+                            <li><a href="home">Home</a></li>
                             <li><a href="#">Product</a></li>
                             <li><a href="#">Blog</a></li>
                             <li><a href="#">Cart</a></li>
@@ -42,11 +42,21 @@
                     <!--user info-->
                     <div class="user-info">
                         <ul>
-                            <% String user = (String) request.getAttribute("user"); %>
+                            <% users user = (users) request.getAttribute("user"); %>
                             <%
                                 if (user != null) {
                             %>
-                            <li><a href="#">Hello, <%= user %></a></li>
+                            <li>
+                                <a href="change-password">Hello, <%= user.getFullname() %></a>
+                                <table>
+                                    <tr>
+                                        <td >
+                                            <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
+                                            <a href="#" style="font-size: 15px;">user profile</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
                             <%
                                 } else {
                             %>

@@ -4,7 +4,7 @@
  */
 
 
-        const storedPassword = "";
+        const storedPassword = '<%= user.getPassword() %>';
 
         function checkPasswords() {
             const oldPassword = document.getElementById('oldPassword').value;

@@ -5,7 +5,7 @@
 
 package Controller;
 
-import Entity.Slider;
+import Entity.*;
 import Entity.Product;
 import Model.DAOSlider;
 import Model.DAOProduct;
@@ -38,7 +38,7 @@ public class HomePage extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-        String user = (String) session.getAttribute("user");
+        users user = (users) session.getAttribute("user");
         request.setAttribute("user", user);
 
         DAOProduct daoProduct = new DAOProduct();

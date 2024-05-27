@@ -5,25 +5,18 @@
 
 package Controller;
 
-import Entity.users;
-import Model.DAOUsers;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.Vector;
 
 /**
  *
  * @author TDG
  */
-@WebServlet(name="ChangePassWord", urlPatterns={"/ChangePassWordURL"})
-public class ChangePassWord extends HttpServlet {
+public class LogOutController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -35,38 +28,18 @@ public class ChangePassWord extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);        
-        users user = (users) session.getAttribute("user");
-//        if (user == null) {
-//            response.sendRedirect("LoginManage.html");
-//        }
-        request.setAttribute("user", user);
-        
-        DAOUsers daoUser = new DAOUsers();
-        Vector<users> userInfor = daoUser.getAll("SELECT * FROM users WHERE fullname = "+user+";");
-        request.setAttribute("userInfor", userInfor);
-        
-        String service = request.getParameter("service");
-        if (service == null) {
-            service = "listAll";
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LogOutController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LogOutController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        if (service.equals("listAll")) {
-            //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
-            //run(view)
-            dispth.forward(request, response);
-        }
-        if(service.equals("changePassWord")){
-            String newPassword = request.getParameter("newPassword");
-            users u = userInfor.get(0);
-            u.setPassword(newPassword);
-            daoUser.changePassWord(u);
-            //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
-            //run(view)
-            dispth.forward(request, response);
-        }
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,7 +53,8 @@ public class ChangePassWord extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getSession().removeAttribute("user");
+        response.sendRedirect("login");
     } 
 
     /** 
