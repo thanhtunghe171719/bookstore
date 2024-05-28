@@ -2,6 +2,7 @@ package Controller;
 
 import Entity.Books;
 import Entity.Categories;
+import Model.DAOBooksList;
 import Model.DAOProduct;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class SearchControl extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        DAOProduct daoProduct = new DAOProduct();
+        DAOBooksList daoBooksList = new DAOBooksList();
 
         String searchText = request.getParameter("search");
         String indexPage = request.getParameter("index");
@@ -41,21 +42,21 @@ public class SearchControl extends HttpServlet {
         int totalBooks;
 
         if (searchText != null && !searchText.isEmpty()) {
-            lst_books = daoProduct.getBookBySearch(searchText);
+            lst_books = daoBooksList.getBookBySearch(searchText);
             totalBooks = lst_books.size();
         } else {
             if (categoryid == 0) {
-                lst_books = daoProduct.getListBooks(index, sort);
-                totalBooks = daoProduct.getTotalBooks();
+                lst_books = daoBooksList.getListBooks(index, sort);
+                totalBooks = daoBooksList.getTotalBooks();
             } else {
-                lst_books = daoProduct.getListBooksByCategory(categoryid, index, sort);
-                totalBooks = daoProduct.getTotalBooksByCategory(categoryid);
+                lst_books = daoBooksList.getListBooksByCategory(categoryid, index, sort);
+                totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
             }
         }
 
         int page = (totalBooks + 2) / 3; // Round up for pagination
 
-        ArrayList<Categories> lst_categories = daoProduct.getListCategories();
+        ArrayList<Categories> lst_categories = daoBooksList.getListCategories();
 
         request.setAttribute("book", lst_books);
         request.setAttribute("page", page);

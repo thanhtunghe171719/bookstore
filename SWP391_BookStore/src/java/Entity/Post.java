@@ -11,7 +11,7 @@ import java.sql.Timestamp;
  * @author kobietkolam
  */
 public class Post {
-     private int id;
+    private int id;
     private String title;
     private String briefInfo;
     private String content;
@@ -74,5 +74,6 @@ public class Post {
     public void setUpdatedDate(Timestamp updatedDate) {
         this.updatedDate = updatedDate;
     }
+    
     
 }
