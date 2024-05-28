@@ -57,7 +57,7 @@ public class ChangePassWord extends HttpServlet {
         if(service.equals("changePassWord")){
             String newPassword = request.getParameter("newPassword");
             user.setPassword(newPassword);
-            daoUser.changePassWord(user);
+            daoUser.changePassword(user);
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
             //run(view)

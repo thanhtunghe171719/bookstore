@@ -48,7 +48,7 @@
                             <tr>
                                 <td >
                                     <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
-                                    <a href="#" style="font-size: 15px;padding-right: 10px;">user profile</a>
+                                    <a href="editprofile" style="font-size: 15px;padding-right: 10px;">user profile</a>
                                     <a href="LogOutController" style="font-size: 15px;">Logout</a>
                                 </td>
                             </tr>
