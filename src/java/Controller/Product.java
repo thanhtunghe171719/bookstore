@@ -6,6 +6,7 @@ package Controller;
  */
 import Entity.Books;
 import Entity.Categories;
+import Entity.users;
 import Model.DAOProduct;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -61,6 +63,10 @@ public class Product extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession(true);
+        users user = (users) session.getAttribute("user");
+        request.setAttribute("user", user);
+        
         DAOProduct daoProduct = new DAOProduct();
 
         String indexPage = request.getParameter("index");

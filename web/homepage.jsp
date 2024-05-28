@@ -43,21 +43,22 @@
                         if (user != null) {
                     %>
                     <li>
-                        <a href="change-password">Hello, <%= user.getFullname() %></a>
+                        <a>Hello, <%= user.getFullname() %></a>
                         <table>
                             <tr>
                                 <td >
                                     <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
-                                    <a href="#" style="font-size: 15px;">user profile</a>
+                                    <a href="#" style="font-size: 15px;padding-right: 10px;">user profile</a>
+                                    <a href="LogOutController" style="font-size: 15px;">Logout</a>
                                 </td>
                             </tr>
                         </table>
                     </li>
-                    
                     <%
                         } else {
                     %>
                         <li><a href="LoginController">Login</a></li>
+                        <li><a href="RegisterController">Register</a></li>
                     <%
                         }
                     %>
@@ -128,9 +129,9 @@
                         <th colspan="3" class="trend-heading">Xu Hướng Mua Sắm</th>
                     </tr>
                     <tr>
-                        <th><a href="HomePageURL?service=sale">Giảm Giá</a></th>
-                        <th><a href="HomePageURL?service=sold">Số Lượng Bán</a></th>
-                        <th><a href="HomePageURL?service=new">Sản Phẩm Mới</a></th>
+                        <th><a href="home?service=sale">Giảm Giá</a></th>
+                        <th><a href="home?service=sold">Số Lượng Bán</a></th>
+                        <th><a href="home?service=new">Sản Phẩm Mới</a></th>
                     </tr>
                 </thead>
             </table>
@@ -182,7 +183,7 @@
 %>
 
             </table>
-        <div class="more-product"><a href="#">MORE</a></div>
+        <div class="more-product"><a href="product">MORE</a></div>
         </div>
     </div>
 

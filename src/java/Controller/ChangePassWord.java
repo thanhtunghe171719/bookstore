@@ -37,14 +37,12 @@ public class ChangePassWord extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);        
         users user = (users) session.getAttribute("user");
-//        if (user == null) {
-//            response.sendRedirect("LoginManage.html");
-//        }
+        if (user == null) {
+            response.sendRedirect("LoginController");
+        }
         request.setAttribute("user", user);
         
         DAOUsers daoUser = new DAOUsers();
-        Vector<users> userInfor = daoUser.getAll("SELECT * FROM users WHERE fullname = "+user+";");
-        request.setAttribute("userInfor", userInfor);
         
         String service = request.getParameter("service");
         if (service == null) {
@@ -58,9 +56,8 @@ public class ChangePassWord extends HttpServlet {
         }
         if(service.equals("changePassWord")){
             String newPassword = request.getParameter("newPassword");
-            users u = userInfor.get(0);
-            u.setPassword(newPassword);
-            daoUser.changePassWord(u);
+            user.setPassword(newPassword);
+            daoUser.changePassWord(user);
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
             //run(view)

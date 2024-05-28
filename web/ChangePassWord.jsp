@@ -42,17 +42,21 @@
                     <!--user info-->
                     <div class="user-info">
                         <ul>
-                            <% users user = (users) request.getAttribute("user"); %>
+                            <%
+                                users user = (users) request.getAttribute("user"); 
+                                String oldPassWord = user.getPassword();
+                            %>
                             <%
                                 if (user != null) {
                             %>
                             <li>
-                                <a href="change-password">Hello, <%= user.getFullname() %></a>
+                                <a>Hello, <%= user.getFullname() %></a>
                                 <table>
                                     <tr>
                                         <td >
                                             <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
-                                            <a href="#" style="font-size: 15px;">user profile</a>
+                                            <a href="#" style="font-size: 15px;padding-right: 10px;">user profile</a>
+                                            <a href="LogOutController" style="font-size: 15px;">Logout</a>
                                         </td>
                                     </tr>
                                 </table>
@@ -60,7 +64,8 @@
                             <%
                                 } else {
                             %>
-                                <li><a href="#">Login</a></li>
+                                <li><a href="LoginController">Login</a></li>
+                                <li><a href="#">Register</a></li>
                             <%
                                 }
                             %>
@@ -68,10 +73,6 @@
                     </div>
                 </div>
                         
-                        
-                    <% 
-                        Vector<users> userInfor = (Vector<users>) request.getAttribute("userInfor");
-                    %>     
                         <div class="user-setting">
 <!--                            <div class="menu-setting-user">
                                 <div style="padding-bottom: 50px;"><div class="circle-user">PICTURE</div></div>
@@ -81,7 +82,7 @@
                                 </ol>
                             </div>     -->
                             <div class="content-user-setting">
-                                <form action="ChangePassWordURL?service=changePassWord" method="get"  onsubmit="return showAlert()">
+                                <form action="change-password?service=changePassWord" method="get"  onsubmit="return showAlert()">
                                     <table class="table-change-password">
                                         <caption style="font-size: 20px;padding: 10px;font-weight: bold;">Change Password</caption>
                                         <tr>

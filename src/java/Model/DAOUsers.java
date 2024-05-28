@@ -106,6 +106,18 @@ public class DAOUsers extends DBConnect{
         return user;
     }    
     
+    public boolean addUser(users user) {
+        String query = "INSERT INTO Users (Email, Password) VALUES (?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getPassword());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();

@@ -54,7 +54,7 @@ public class LogOutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         request.getSession().removeAttribute("user");
-        response.sendRedirect("login");
+        response.sendRedirect("LoginController");
     } 
 
     /** 
