@@ -35,6 +35,7 @@
                 </div>
             </div>
             <div class="product-essential-detail">
+                <c:set var="pro" value="${pro}"/>
                 <div class="product-title">
                     <span>${pro.getProductTitle()}</span>
                 </div>
@@ -45,7 +46,7 @@
                     </div>
                     <div class="product-publishhouse">
                         <span>Nhà xuất bản:</span>
-                        <span>${pro.getProductPublishHouse()}</span>
+                        <span>${rs.getProductPublishHouse()}</span>
                     </div>
                     <div class="product-price">
                         <span>Giá :</span>
@@ -80,6 +81,7 @@
             <div class="product-info-title">Thông tin sản phẩm</div>
             <div class="product_view_tab_content_ad">
                 <div class="product_view_tab_content_additional">
+                    <c:set var="pro" value="${pro}"/>
                     <table class="data-table table-additional">
                         <colgroup><col width="25%">
                             <col>

@@ -13,18 +13,26 @@ import java.sql.SQLException;
  * @author ADMIN
  */
 public class DBContext {
-     protected Connection connection;
-    public DBContext()
-    {
+    Connection connection=null;
+    public DBContext(String url,String userName,String password){
         try {
-            // Edit URL , username, password to authenticate with your MS SQL Server
-            String url = "jdbc:mysql://localhost:3306;databaseName=checksql";
-            String username = "sa";
-            String password = "123";
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            connection = DriverManager.getConnection(url, username, password);
-        } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex);
-        }
+            //drive
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            //connection
+            connection=DriverManager.getConnection(url,userName, password);
+            System.out.println("connected");
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }        
+    }
+    
+    public DBContext(){
+        this("jdbc:mysql://localhost:3306/checksql","root","1234");
+    }
+    
+    public static void main(String[] args){
+        new DBContext();
     }
 }
