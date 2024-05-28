@@ -7,7 +7,7 @@ package Controller;
 import Entity.Books;
 import Entity.Categories;
 import Entity.users;
-import Model.DAOProduct;
+import Model.DAOBooksList;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,8 +66,8 @@ public class Product extends HttpServlet {
         HttpSession session = request.getSession(true);
         users user = (users) session.getAttribute("user");
         request.setAttribute("user", user);
-        
-        DAOProduct daoProduct = new DAOProduct();
+
+        DAOBooksList daoBooksList = new DAOBooksList();
 
         String indexPage = request.getParameter("index");
         if (indexPage == null) {
@@ -89,24 +89,24 @@ public class Product extends HttpServlet {
         int totalBooks = 0;
 
         if (categoryidParam == "0") {
-            lst_books = daoProduct.getListBooks(index, sort);
-            totalBooks = daoProduct.getTotalBooks();
+            lst_books = daoBooksList.getListBooks(index, sort);
+            totalBooks = daoBooksList.getTotalBooks();
         } else {
             try {
                 int categoryid = Integer.parseInt(categoryidParam);
-                lst_books = daoProduct.getListBooksByCategory(categoryid, index, sort);
-                totalBooks = daoProduct.getTotalBooksByCategory(categoryid);
+                lst_books = daoBooksList.getListBooksByCategory(categoryid, index, sort);
+                totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
 
             } catch (NumberFormatException e) {
                 // Handle the error, maybe set a default category or show an error message
-                totalBooks = daoProduct.getTotalBooks();
-                lst_books = daoProduct.getListBooks(index, sort); // Default behavior if parsing fails
+                totalBooks = daoBooksList.getTotalBooks();
+                lst_books = daoBooksList.getListBooks(index, sort); // Default behavior if parsing fails
             }
         }
 
         int page = (totalBooks + 2) / 3; // Round up for pagination
 
-        ArrayList<Categories> lst_categories = daoProduct.getListCategories();
+        ArrayList<Categories> lst_categories = daoBooksList.getListCategories();
 
         request.setAttribute("book", lst_books);
         request.setAttribute("page", page);
