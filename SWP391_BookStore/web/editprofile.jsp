@@ -111,8 +111,8 @@
                     <div class="menu">
                         <ul>
                             <li><a href="home">Home</a></li>
-                            <li><a href="#">Product</a></li>
-                            <li><a href="#">Blog</a></li>
+                            <li><a href="product">Product</a></li>
+                            <li><a href="blog">Blog</a></li>
                             <li><a href="#">Cart</a></li>
                         </ul>
                     </div>
