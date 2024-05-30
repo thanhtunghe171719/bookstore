@@ -22,14 +22,14 @@
         <div class="container-header" >
             <!--logo-->
             <div class="logo-column">
-                <a href="HomePageURL" >BOOKSHOP</a>
+                <a href="home" >BOOKSHOP</a>
             </div>
 
             <!--menu-->
             <div class="menu">
                 <ul>
-                    <li><a href="HomePageURL">Home</a></li>
-                    <li><a href="#">Product</a></li>
+                    <li><a href="home">Home</a></li>
+                    <li><a href="product">Product</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="#">Cart</a></li>
                 </ul>
@@ -38,14 +38,29 @@
             <!--user info-->
             <div class="user-info">
                 <ul>
-                    <% String user = (String) request.getAttribute("user"); %>
                     <%
-                        if (user != null) {
+                        Vector<users> userVector = (Vector<users>) request.getAttribute("userVector");
                     %>
+                    <%
+                        if (userVector != null) {
+                    %>
+                    <li>
+                        <a>Hello, <%=userVector.get(0).getFullname()%></a>
+                        <table>
+                            <tr>
+                                <td >
+                                    <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
+                                    <a href="#" style="font-size: 15px;padding-right: 10px;">user profile</a>
+                                    <a href="LogOutController" style="font-size: 15px;">Logout</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
                     <%
                         } else {
                     %>
-                        <li><a href="ChangePassWordURL">Login</a></li>
+                        <li><a href="LoginController">Login</a></li>
+                        <li><a href="RegisterController">Register</a></li>
                     <%
                         }
                     %>
@@ -116,9 +131,9 @@
                         <th colspan="3" class="trend-heading">Xu Hướng Mua Sắm</th>
                     </tr>
                     <tr>
-                        <th><a href="HomePageURL?service=sale">Giảm Giá</a></th>
-                        <th><a href="HomePageURL?service=sold">Số Lượng Bán</a></th>
-                        <th><a href="HomePageURL?service=new">Sản Phẩm Mới</a></th>
+                        <th><a href="home?service=sale">Giảm Giá</a></th>
+                        <th><a href="home?service=sold">Số Lượng Bán</a></th>
+                        <th><a href="home?service=new">Sản Phẩm Mới</a></th>
                     </tr>
                 </thead>
             </table>
@@ -157,7 +172,6 @@
                     </div>
                     <div class="add-cart">
                         <a href="#">Detail</a>
-                        <a href="#">Buy</a>
                     </div>
                 </div>
             </div>
@@ -171,7 +185,7 @@
 %>
 
             </table>
-        <div class="more-product"><a href="#">MORE</a></div>
+        <div class="more-product"><a href="product">MORE</a></div>
         </div>
     </div>
 

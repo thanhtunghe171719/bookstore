@@ -31,7 +31,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/ClientSide/css.css to edit this t
             .menu ul li a, .user-info ul li a {
                 text-decoration: none;
                 color: #000;
-                font-size: 18px;
+                font-size: 20px;
             }
             .user-info ul li a {
                 font-weight: bold;

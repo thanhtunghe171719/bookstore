@@ -2,23 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package Model;
 
+import Entity.Books;
+import Entity.Categories;
 import Entity.Slider;
 import Entity.Product;
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+public class DAOProduct extends DBConnect {
 
-public class DAOProduct extends DBConnect{
     public Vector<Product> getAll(String sql) {
         Vector<Product> vector = new Vector<>();
         try {
@@ -36,13 +39,13 @@ public class DAOProduct extends DBConnect{
                 String size = rs.getString("size");
                 String weight = rs.getString("weight");
                 String summary = rs.getString("summary");
-                BigDecimal price = rs.getBigDecimal("price"); 
+                BigDecimal price = rs.getBigDecimal("price");
                 Integer rating = rs.getObject("rating") != null ? rs.getInt("rating") : null;
                 Integer discount = rs.getObject("discount") != null ? rs.getInt("discount") : null;
                 int stock = rs.getInt("stock");
                 Timestamp createAt = rs.getTimestamp("create_at");
                 Timestamp updatedAt = rs.getTimestamp("updated_at");
-                Product p = new Product(bookId, title, author, image, categoryId, publishingHouse, 
+                Product p = new Product(bookId, title, author, image, categoryId, publishingHouse,
                         publishedYear, size, weight, summary, price, rating, discount, stock, createAt, updatedAt);
                 vector.add(p);
             }
@@ -51,6 +54,7 @@ public class DAOProduct extends DBConnect{
         }
         return vector;
     }
+
     public static void main(String[] args) {
         DAOProduct daoProduct = new DAOProduct();
         Vector<Product> vector = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");

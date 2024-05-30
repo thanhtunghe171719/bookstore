@@ -5,24 +5,18 @@
 
 package Controller;
 
-import Entity.*;
-import Model.*;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.Vector;
 
 /**
  *
  * @author TDG
  */
-@WebServlet(name="CartDetails", urlPatterns={"/CartDetailsURL"})
-public class CartDetails extends HttpServlet {
+public class LogOutController extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -34,30 +28,18 @@ public class CartDetails extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);        
-        String user = (String) session.getAttribute("user");
-//        if (user == null) {
-//            response.sendRedirect("LoginManage.html");
-//        }
-        request.setAttribute("user", user);
-        
-        DAOCartItems daoCartItems = new DAOCartItems();
-        DAOProduct daoProduct = new DAOProduct();
-        
-        String service = request.getParameter("service");
-        if (service == null) {
-            service = "listAll";
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet LogOutController</title>");  
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet LogOutController at " + request.getContextPath () + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-        if (service.equals("listAll")) {
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books");
-            request.setAttribute("6products", vectorProducts);
-
-            //select(jsp)   
-            RequestDispatcher dispth = request.getRequestDispatcher("CartDetails.jsp");
-            //run(view)
-            dispth.forward(request, response);
-        }
-        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,7 +53,8 @@ public class CartDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        request.getSession().removeAttribute("user");
+        response.sendRedirect("LoginController");
     } 
 
     /** 

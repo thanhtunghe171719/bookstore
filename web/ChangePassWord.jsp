@@ -4,6 +4,7 @@
     Author     : TDG
 --%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import = "java.util.Vector, Entity.*" %>
 <!DOCTYPE html>
@@ -26,13 +27,13 @@
                 <div class="container-header" >
                     <!--logo-->
                     <div class="logo-column">
-                        <a href="HomePageURL" >BOOKSHOP</a>
+                        <a href="home" >BOOKSHOP</a>
                     </div>
 
                     <!--menu-->
                     <div class="menu">
                         <ul>
-                            <li><a href="HomePageURL">Home</a></li>
+                            <li><a href="home">Home</a></li>
                             <li><a href="#">Product</a></li>
                             <li><a href="#">Blog</a></li>
                             <li><a href="#">Cart</a></li>
@@ -42,15 +43,29 @@
                     <!--user info-->
                     <div class="user-info">
                         <ul>
-                            <% String user = (String) request.getAttribute("user"); %>
                             <%
-                                if (user != null) {
+                                Vector<users> userVector = (Vector<users>) request.getAttribute("userVector");
                             %>
-                            <li><a href="#">Hello, <%= user %></a></li>
+                            <%
+                                if (userVector != null) {
+                            %>
+                            <li>
+                                <a>Hello, <%=userVector.get(0).getFullname()%></a>
+                                <table>
+                                    <tr>
+                                        <td >
+                                            <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
+                                            <a href="#" style="font-size: 15px;padding-right: 10px;">user profile</a>
+                                            <a href="LogOutController" style="font-size: 15px;">Logout</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
                             <%
                                 } else {
                             %>
-                                <li><a href="#">Login</a></li>
+                                <li><a href="LoginController">Login</a></li>
+                                <li><a href="#">Register</a></li>
                             <%
                                 }
                             %>
@@ -58,10 +73,6 @@
                     </div>
                 </div>
                         
-                        
-                    <% 
-                        Vector<users> userInfor = (Vector<users>) request.getAttribute("userInfor");
-                    %>     
                         <div class="user-setting">
 <!--                            <div class="menu-setting-user">
                                 <div style="padding-bottom: 50px;"><div class="circle-user">PICTURE</div></div>
@@ -71,28 +82,33 @@
                                 </ol>
                             </div>     -->
                             <div class="content-user-setting">
-                                <form action="ChangePassWordURL?service=changePassWord" method="get"  onsubmit="return showAlert()">
+                                <form action="change-password?service=changePassWord" method="post">
                                     <table class="table-change-password">
                                         <caption style="font-size: 20px;padding: 10px;font-weight: bold;">Change Password</caption>
                                         <tr>
                                             <td>Old password </td>
-                                            <td><input type="password" id="oldPassword" onkeyup="checkPasswords()"></td>
+                                            <td><input type="password" id="oldPassword" name="oldPassword" onkeyup="checkOldPasswords();"></td>
                                             <td id="oldPasswordResult"></td>
+                                            <td id="storedPassword"  value="<%=userVector.get(0).getPassword()%>" ></td>
                                         </tr>
                                         <tr>
                                             <td>New password </td>
-                                            <td><input type="password" id="newPassword" name="newPassword" onkeyup="checkPasswords()"></td>
+                                            <td><input type="password" id="newPassword" name="newPassword" onkeyup="checkNewPasswords();"></td>
                                             <td id="newPasswordResult"></td>
                                         </tr>
                                         <tr>
                                             <td>Confirm new password </td>
-                                            <td><input type="password" id="confirmNewPassword" onkeyup="checkPasswords()"></td>
+                                            <td><input type="password" id="confirmNewPassword" onkeyup="checkConfirmNewPasswords();"></td>
                                             <td id="confirmNewPasswordResult"></td>
                                         </tr>
                                         <tr>
-                                            <td id="check-3-password"></td>
+                                            <td>
+                                                <c:if test="${not empty message}">
+                                                    <div id="check-3-password">${message}</div>
+                                                </c:if>
+                                            </td>
                                             <td colspan="3" style="text-align: center;">
-                                                <input type="submit" id="saveButton" class="save-button" name="service" value="changePassWord">
+                                                <input type="submit" id="saveButton" class="save-button" name="submit" value="save" >
                                             </td>
                                         </tr>
                                     </table>
@@ -116,8 +132,5 @@
     
     
     <script src="./js/changePassWord.js"></script>
-    <script>
-        
 
-    </script>
 </html>

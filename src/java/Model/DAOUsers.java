@@ -83,6 +83,42 @@ public class DAOUsers extends DBConnect{
         return n;
     }
     
+    public users getUserByUsername(String email) {
+        users user = null;
+        String query = "SELECT * FROM Users WHERE Email = ?";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    user = mapResultSetToUser(rs);
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return user;
+    }
+    
+    private users mapResultSetToUser(ResultSet rs) throws SQLException {
+        users user = new users();       
+        user.setEmail(rs.getString("Email"));
+        user.setPassword(rs.getString("Password"));
+        return user;
+    }    
+    
+    public boolean addUser(users user) {
+        String query = "INSERT INTO Users (Email, Password) VALUES (?, ?)";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, user.getEmail());
+            ps.setString(2, user.getPassword());
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    
     public static void main(String[] args) {
         DAOUsers dao = new DAOUsers();
         Vector<users> vector = dao.getAll("SELECT * FROM users WHERE user_id = 1;");

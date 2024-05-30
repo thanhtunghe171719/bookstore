@@ -5,10 +5,11 @@
 
 package Controller;
 
-import Entity.Slider;
+import Entity.*;
 import Entity.Product;
 import Model.DAOSlider;
 import Model.DAOProduct;
+import Model.DAOUsers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -37,10 +38,17 @@ public class HomePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
-        String user = (String) session.getAttribute("user");
-        request.setAttribute("user", user);
-
+        HttpSession session = request.getSession(true);        
+        users user = (users) session.getAttribute("user");
+        
+        DAOUsers daoUser = new DAOUsers();
+        Vector<users> userVector = null;
+        if(user != null){
+            String email = user.getEmail();
+            userVector = daoUser.getAll("SELECT * FROM checksql.users where email like '"+email+"';");
+        }
+        request.setAttribute("userVector", userVector);
+        
         DAOProduct daoProduct = new DAOProduct();
         DAOSlider daoSlider = new DAOSlider();
         
