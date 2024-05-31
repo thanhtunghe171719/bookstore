@@ -5,28 +5,26 @@
 
 package Controller;
 
-import DAL.UserDAO;
-import Model.User;
+import Entity.users;
+import Model.DAOUsers;
 import java.io.IOException;
-
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author FPTSHOPKM4
+ * @author TDG
  */
 public class RegisterController extends HttpServlet {
-   
     private static final long serialVersionUID = 1L;
 
-    private UserDAO userDAO;
+    private DAOUsers userDAO;
 
     public void init() {
-        userDAO = new UserDAO();
+        userDAO = new DAOUsers();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -36,12 +34,15 @@ public class RegisterController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
         String email = request.getParameter("email");
-
+        String password = request.getParameter("password");
+        String phone = request.getParameter("phone");
+        String fullname = request.getParameter("fullname");
+        String address = request.getParameter("address");
+        String gender = request.getParameter("gender");
+        
         // Check if username already exists
-        User existingUser = userDAO.getUserByUsername(username);
+        users existingUser = userDAO.getUserByUsername(email);
         if (existingUser != null) {
             request.setAttribute("errorMessage", "Username already exists");
             request.getRequestDispatcher("register.jsp").forward(request, response);
@@ -49,11 +50,15 @@ public class RegisterController extends HttpServlet {
         }
 
         // Create a new user object
-        User newUser = new User();
-        newUser.setUsername(username);
+        users newUser = new users();
+        newUser.setEmail(email);
         newUser.setPassword(password);
-        
-
+        newUser.setPhone(phone);
+        newUser.setRoleId(1); 
+        newUser.setFullname(fullname);
+        newUser.setGender(gender);
+        newUser.setAddress(address);
+       
         // Add the new user to the database
         boolean userAdded = userDAO.addUser(newUser);
 
@@ -68,5 +73,4 @@ public class RegisterController extends HttpServlet {
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }
     }
-
 }
