@@ -87,15 +87,15 @@
 
                     <div class="index-page">
                         <c:if test="${pagetag > 1}">
-                            <a class="icon-turn-left" href="product?categoryid=${param.categoryid}&index=${pagetag - 1}">&nbsp;</a>
+                            <a class="icon-turn-left" href="product?categoryid=${param.categoryid}&index=${pagetag - 1}&sort=${param.sort}">&nbsp;</a>
                         </c:if>
                         <c:forEach begin="1" end="${page}" var="page">
                             <li>
-                                <a class="${pagetag == page ? "active-page" : ""}" href="product?categoryid=${param.categoryid}&index=${page}">${page}</a>
+                                <a class="${pagetag == page ? "active-page" : ""}" href="product?categoryid=${param.categoryid}&index=${page}&sort=${param.sort}">${page}</a>
                             </li>
                         </c:forEach>
                         <c:if test="${pagetag < page}">
-                            <a class="icon-turn-right" href="product?categoryid=${param.categoryid}&index=${pagetag + 1}">&nbsp;</a>
+                            <a class="icon-turn-right" href="product?categoryid=${param.categoryid}&index=${pagetag + 1}&sort=${param.sort}">&nbsp;</a>
                         </c:if>
                     </div>
                 </div>

@@ -37,12 +37,17 @@ public class ChangePassWord extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);        
         users user = (users) session.getAttribute("user");
-        if (user == null) {
+        
+        if(user == null || user.getEmail() == null){
             response.sendRedirect("LoginController");
+            return; // Stop further processing
         }
-        request.setAttribute("user", user);
         
         DAOUsers daoUser = new DAOUsers();
+        
+        Vector<users> userVector = daoUser.getAll("SELECT * FROM checksql.users where email like '"+user.getEmail()+"';");
+        request.setAttribute("userVector", userVector);
+        user = userVector.get(0);
         
         String service = request.getParameter("service");
         if (service == null) {
@@ -55,9 +60,24 @@ public class ChangePassWord extends HttpServlet {
             dispth.forward(request, response);
         }
         if(service.equals("changePassWord")){
-            String newPassword = request.getParameter("newPassword");
-            user.setPassword(newPassword);
-            daoUser.changePassword(user);
+            String message = null;
+            String submit = request.getParameter("submit");
+            if(submit != null && submit.compareTo("save")==0){
+                String oldPassword = request.getParameter("oldPassword");
+                if(oldPassword.compareTo(user.getPassword())==0){
+                    String newPassword = request.getParameter("newPassword");
+                    user.setPassword(newPassword);
+                    int result = daoUser.changePassWord(user);
+                    if(result != 0 ) {
+                        message = "Change Password change successful.";
+                    } else {
+                        message = "Change Password change failed.";
+                    }
+                }else if(oldPassword.compareTo(user.getPassword())!=0){
+                    message = "INPUT OLD PASSWORD WRONG.";
+                }
+            }
+            request.setAttribute("message", message);
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
             //run(view)

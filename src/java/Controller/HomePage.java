@@ -6,18 +6,18 @@
 package Controller;
 
 import Entity.*;
-import Entity.Product;
 import Model.DAOSlider;
 import Model.DAOProduct;
+import Model.DAOUsers;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.awt.print.Book;
 import java.util.Vector;
 
 /**
@@ -37,9 +37,16 @@ public class HomePage extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession(true);        
         users user = (users) session.getAttribute("user");
-        request.setAttribute("user", user);
+        
+        DAOUsers daoUser = new DAOUsers();
+        Vector<users> userVector = null;
+        if(user != null && user.getEmail() != null){
+            String email = user.getEmail();
+            userVector = daoUser.getAll("SELECT * FROM checksql.users where email like '"+email+"';");
+        }
+        request.setAttribute("userVector", userVector);
 
         DAOProduct daoProduct = new DAOProduct();
         DAOSlider daoSlider = new DAOSlider();
@@ -53,7 +60,7 @@ public class HomePage extends HttpServlet {
             service = "listAll";
         }
         if (service.equals("listAll")) {
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
             request.setAttribute("6products", vectorProducts);
 
             //select(jsp)   
@@ -64,7 +71,7 @@ public class HomePage extends HttpServlet {
         
         if(service.equals("sale")){
 
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
             request.setAttribute("6products", vectorProducts);
 
             //select(jsp)   
@@ -75,7 +82,7 @@ public class HomePage extends HttpServlet {
         
         if(service.equals("new")){
             
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE book_id > 0 ORDER BY book_id DESC LIMIT 6;");
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE book_id > 0 ORDER BY book_id DESC LIMIT 6;");
             request.setAttribute("6products", vectorProducts);
 
             //select(jsp)   
@@ -85,7 +92,7 @@ public class HomePage extends HttpServlet {
         }
         
         if(service.equals("sold")){
-            Vector<Product> vectorProducts = daoProduct.getAll("SELECT b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
                                                                 "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.updated_at \n" +
                                                                 "FROM books b LEFT JOIN order_items oi ON b.book_id = oi.book_id \n" +
                                                                 "GROUP BY b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +

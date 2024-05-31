@@ -4,7 +4,7 @@
  */
 package Model;
 
-import Entity.Slider;
+import Entity.*;
 import java.util.Vector;
 import java.sql.Statement;
 import java.sql.ResultSet;

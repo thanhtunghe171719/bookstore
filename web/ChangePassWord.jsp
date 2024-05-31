@@ -43,14 +43,13 @@
                     <div class="user-info">
                         <ul>
                             <%
-                                users user = (users) request.getAttribute("user"); 
-                                String oldPassWord = user.getPassword();
+                                Vector<users> userVector = (Vector<users>) request.getAttribute("userVector");
                             %>
                             <%
-                                if (user != null) {
+                                if (userVector != null) {
                             %>
                             <li>
-                                <a>Hello, <%= user.getFullname() %></a>
+                                <a>Hello, <%=userVector.get(0).getFullname()%></a>
                                 <table>
                                     <tr>
                                         <td >
@@ -82,33 +81,39 @@
                                 </ol>
                             </div>     -->
                             <div class="content-user-setting">
-                                <form action="change-password?service=changePassWord" method="get"  onsubmit="return showAlert()">
+                                <form action="change-password?service=changePassWord" method="post">
                                     <table class="table-change-password">
                                         <caption style="font-size: 20px;padding: 10px;font-weight: bold;">Change Password</caption>
                                         <tr>
                                             <td>Old password </td>
-                                            <td><input type="password" id="oldPassword" onkeyup="checkPasswords()"></td>
+                                            <td><input type="password" id="oldPassword" name="oldPassword" onkeyup="checkOldPasswords();"></td>
                                             <td id="oldPasswordResult"></td>
+                                            <td id="storedPassword"  value="<%=userVector.get(0).getPassword()%>" ></td>
                                         </tr>
                                         <tr>
                                             <td>New password </td>
-                                            <td><input type="password" id="newPassword" name="newPassword" onkeyup="checkPasswords()"></td>
+                                            <td><input type="password" id="newPassword" name="newPassword" onkeyup="checkNewPasswords();"></td>
                                             <td id="newPasswordResult"></td>
                                         </tr>
                                         <tr>
                                             <td>Confirm new password </td>
-                                            <td><input type="password" id="confirmNewPassword" onkeyup="checkPasswords()"></td>
+                                            <td><input type="password" id="confirmNewPassword" onkeyup="checkConfirmNewPasswords();"></td>
                                             <td id="confirmNewPasswordResult"></td>
                                         </tr>
                                         <tr>
-                                            <td id="check-3-password"></td>
+                                            <td>
+                                                <c:if test="${not empty message}">
+                                                    <div style="color: blue" id="check-3-password">${message}</div>
+                                                </c:if>
+                                            </td>
                                             <td colspan="3" style="text-align: center;">
-                                                <input type="submit" id="saveButton" class="save-button" name="service" value="changePassWord">
+                                                <input type="submit" id="saveButton" class="save-button" name="submit" value="save" >
                                             </td>
                                         </tr>
                                     </table>
                                 </form>
                             </div>
+
                         </div>        
                             
                        

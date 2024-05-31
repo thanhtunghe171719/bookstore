@@ -4,26 +4,20 @@
  */
 package Model;
 
-import Entity.Books;
-import Entity.Categories;
-import Entity.Slider;
-import Entity.Product;
-import java.math.BigDecimal;
+import Entity.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DAOProduct extends DBConnect {
 
-    public Vector<Product> getAll(String sql) {
-        Vector<Product> vector = new Vector<>();
+    public Vector<Books> getAll(String sql) {
+        Vector<Books> vector = new Vector<>();
         try {
 
             Statement state = conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -39,13 +33,13 @@ public class DAOProduct extends DBConnect {
                 String size = rs.getString("size");
                 String weight = rs.getString("weight");
                 String summary = rs.getString("summary");
-                BigDecimal price = rs.getBigDecimal("price");
+                Double price = rs.getDouble("price");
                 Integer rating = rs.getObject("rating") != null ? rs.getInt("rating") : null;
                 Integer discount = rs.getObject("discount") != null ? rs.getInt("discount") : null;
                 int stock = rs.getInt("stock");
                 Timestamp createAt = rs.getTimestamp("create_at");
                 Timestamp updatedAt = rs.getTimestamp("updated_at");
-                Product p = new Product(bookId, title, author, image, categoryId, publishingHouse,
+                Books p = new Books(bookId, title, author, image, categoryId, publishingHouse,
                         publishedYear, size, weight, summary, price, rating, discount, stock, createAt, updatedAt);
                 vector.add(p);
             }
@@ -57,9 +51,9 @@ public class DAOProduct extends DBConnect {
 
     public static void main(String[] args) {
         DAOProduct daoProduct = new DAOProduct();
-        Vector<Product> vector = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
-        for (Product product : vector) {
-            System.out.println(product);
+        Vector<Books> vector = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
+        for (Books books : vector) {
+            System.out.println(books);
         }
     }
 }

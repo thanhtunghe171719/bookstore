@@ -25,15 +25,39 @@ public class DAOUsers extends DBConnect {
         return vector;
     }
 
-    public int changePassword(users obj) {
-        String sql = "UPDATE users SET email = ?, phone = ?, password = ?, role_id = ?, fullname = ?, gender = ?, address = ?, create_at = ?, updated_at = ? WHERE user_id = ?";
-        try ( PreparedStatement pre = conn.prepareStatement(sql)) {
-            setPreparedStatementForUser(pre, obj);
-            return pre.executeUpdate();
+     public int changePassWord(users obj) {
+        int n = 0;
+
+        String sql = "UPDATE `checksql`.`users`\n" +
+                    "SET\n" +
+                    "`email` = ?,\n" +
+                    "`phone` = ?,\n" +
+                    "`password` = ?,\n" +
+                    "`role_id` = ?,\n" +
+                    "`fullname` = ?,\n" +
+                    "`gender` = ?,\n" +
+                    "`address` = ?,\n" +
+                    "`create_at` = ?,\n" +
+                    "`updated_at` = ?\n" +
+                    "WHERE `user_id` = ?;";
+        try {
+            PreparedStatement pre = conn.prepareStatement(sql);
+
+            pre.setString(1, obj.getEmail());
+            pre.setString(2, obj.getPhone());
+            pre.setString(3, obj.getPassword());
+            pre.setInt(4, obj.getRoleId());
+            pre.setString(5, obj.getFullname());
+            pre.setString(6, obj.getGender());
+            pre.setString(7, obj.getAddress());
+            pre.setTimestamp(8, obj.getCreateAt());
+            pre.setTimestamp(9, obj.getUpdatedAt());
+            pre.setInt(10, obj.getUserId());
+            n = pre.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DAOUsers.class.getName()).log(Level.SEVERE, null, ex);
-            return 0;
         }
+        return n;
     }
 
     public users getUserByUsername(String email) {

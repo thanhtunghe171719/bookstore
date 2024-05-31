@@ -38,12 +38,12 @@
             <!--user info-->
             <div class="user-info">
                 <ul>
-                    <% users user = (users) request.getAttribute("user"); %>
+                    <% Vector<users> userVector = (Vector<users>) request.getAttribute("userVector"); %>
                     <%
-                        if (user != null) {
+                        if (userVector != null) {
                     %>
                     <li>
-                        <a>Hello, <%= user.getFullname() %></a>
+                        <a>Hello, <%=userVector.get(0).getFullname()%></a>
                         <table>
                             <tr>
                                 <td >
@@ -139,26 +139,26 @@
             <table class="product-table">
                 
 <%
-    Vector<Product> vectorPro = (Vector<Product>) request.getAttribute("6products");
+    Vector<Books> vectorPro = (Vector<Books>) request.getAttribute("6products");
     int counter = 0; 
-    for (Product product : vectorPro) {
+    for (Books book : vectorPro) {
         if (counter % 3 == 0) { 
             if (counter > 0) {
                 out.println("</tr>");
             }
             out.println("<tr>");
         }
-        int originalPrice = product.getPrice().intValue();
-        int discount = product.getDiscount();
+        double originalPrice = Double.parseDouble(book.getPrice());
+        int discount = book.getDiscount();
         double discountedPrice = originalPrice - (originalPrice * discount / 100.0);
 %>
         <td style="padding: 5px;"> 
             <div class="product-box" style="width: 450px; margin: auto;"> 
                 <div class="product-img">
-                    <img src="<%=product.getImage()%>" alt="alt" style="width: 450px; height: 400px;"/> 
+                    <img src="<%=book.getImage()%>" alt="alt" style="width: 450px; height: 400px;"/> 
                 </div>
                 <div class="product-detail">
-                    <h4><%=product.getTitle()%></h4>
+                    <h4><%=book.getTitle()%></h4>
                     
                     <div class="product-price">
                         <% if (discount > 0) { %>
