@@ -26,13 +26,13 @@
                 <div class="container-header" >
                     <!--logo-->
                     <div class="logo-column">
-                        <a href="HomePageURL" >BOOKSHOP</a>
+                        <a href="home" >BOOKSHOP</a>
                     </div>
 
                     <!--menu-->
                     <div class="menu">
                         <ul>
-                            <li><a href="HomePageURL">Home</a></li>
+                            <li><a href="home">Home</a></li>
                             <li><a href="#">Product</a></li>
                             <li><a href="#">Blog</a></li>
                             <li><a href="#">Cart</a></li>
@@ -42,15 +42,30 @@
                     <!--user info-->
                     <div class="user-info">
                         <ul>
-                            <% String user = (String) request.getAttribute("user"); %>
+                            <%
+                                users user = (users) request.getAttribute("user"); 
+                                String oldPassWord = user.getPassword();
+                            %>
                             <%
                                 if (user != null) {
                             %>
-                            <li><a href="#">Hello, <%= user %></a></li>
+                            <li>
+                                <a>Hello, <%= user.getFullname() %></a>
+                                <table>
+                                    <tr>
+                                        <td >
+                                            <a href="change-password" style="font-size: 15px;padding-right: 10px;">change password</a>
+                                            <a href="#" style="font-size: 15px;padding-right: 10px;">user profile</a>
+                                            <a href="LogOutController" style="font-size: 15px;">Logout</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </li>
                             <%
                                 } else {
                             %>
-                                <li><a href="#">Login</a></li>
+                                <li><a href="LoginController">Login</a></li>
+                                <li><a href="#">Register</a></li>
                             <%
                                 }
                             %>
@@ -58,20 +73,16 @@
                     </div>
                 </div>
                         
-                        
-                    <% 
-                        Vector<users> userInfor = (Vector<users>) request.getAttribute("userInfor");
-                    %>     
                         <div class="user-setting">
-                            <div class="menu-setting-user">
+<!--                            <div class="menu-setting-user">
                                 <div style="padding-bottom: 50px;"><div class="circle-user">PICTURE</div></div>
                                 <ol>
                                     <li><a href="#">1.profile user</a></li>
                                     <li><a href="#">2.change password</a></li>
                                 </ol>
-                            </div>     
+                            </div>     -->
                             <div class="content-user-setting">
-                                <form action="ChangePassWordURL?service=changePassWord" method="get">
+                                <form action="change-password?service=changePassWord" method="get"  onsubmit="return showAlert()">
                                     <table class="table-change-password">
                                         <caption style="font-size: 20px;padding: 10px;font-weight: bold;">Change Password</caption>
                                         <tr>
@@ -92,7 +103,7 @@
                                         <tr>
                                             <td id="check-3-password"></td>
                                             <td colspan="3" style="text-align: center;">
-                                                <input type="submit" id="saveButton" class="save-button" name="submit" value="save">
+                                                <input type="submit" id="saveButton" class="save-button" name="service" value="changePassWord">
                                             </td>
                                         </tr>
                                     </table>
