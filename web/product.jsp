@@ -1,5 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
@@ -76,8 +78,17 @@
                                         <h2 class="product-title">
                                             <a class="product-text" href="#">${book.getTitle()}</a>
                                         </h2>
+
+                                        <c:set var="originalPrice" value="${book.getPrice()}" />
+                                        <c:set var="discount" value="${book.getDiscount()}" />
+                                        <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
+
                                         <div class="product-price">
-                                            <span>${book.getPrice()} đ</span>
+                                            <span><fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
+                                        </div>
+
+                                        <div class="product-before-discount">
+                                            <span><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
                                         </div>
                                     </div>
                                 </div>

@@ -278,12 +278,21 @@ ul, ol {
     line-height: 17px;
 }
 
-.product-price{
+.product-price {
     margin-top: 4px;
     font-size: 15px;
     font-family: "Poppins", sans-serif;
     color: #C92127;
     font-weight: 600;
+}
+
+.product-before-discount {
+    margin-top: 4px;
+    color: #999999;
+    font-family: "Poppins", sans-serif;
+    font-size: 12px;
+    text-decoration: line-through;
+    font-weight: 400;
 }
 
 .index-page {
