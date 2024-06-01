@@ -1,45 +1,30 @@
-package dal;
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import model.Books;
-import model.Categories;
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
+package Model;
+
+import Entity.Books;
+import Entity.Categories;
+import java.util.ArrayList;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.Date;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
- * @author FPT University - PRJ30X
+ * @author ngdin
  */
-public class DBContext {
-
-    protected Connection connection;
-
-    public DBContext() {
-        try {
-            String user = "necotherainbow";
-            String pass = "Neco.Killm3plz.2311";
-            String url = "jdbc:mysql://localhost:3306/query_db";
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, user, pass);
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+public class DAOBooksList extends DBConnect {
 
     public ArrayList<Books> getListBooks(int index, String sort) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
-            String sql = "SELECT * FROM query_db.books ";
+            String sql = "SELECT * FROM checksql.books ";
             switch (sort) {
                 case "newest":
                     sql += "ORDER BY published_year DESC ";
@@ -55,7 +40,7 @@ public class DBContext {
                     break;
             }
             sql += "LIMIT 4 OFFSET ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, (index - 1) * 3);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -64,24 +49,26 @@ public class DBContext {
                 String author = rs.getString(3);
                 String image = rs.getString(4);
                 int category_id = rs.getInt(5);
-                int published_year = rs.getInt(6);
-                String size = rs.getString(7);
-                String weight = rs.getString(8);
-                String summary = rs.getString(9);
-                double price = rs.getDouble(10);
-                int discount = rs.getInt(11);
-                int stock = rs.getInt(12);
-                Date create_at = rs.getDate(13);
-                Date update_at = rs.getDate(14);
+                String publishing_house = rs.getString(6);
+                int published_year = rs.getInt(7);
+                String size = rs.getString(8);
+                String weight = rs.getString(9);
+                String summary = rs.getString(10);
+                double price = rs.getDouble(11);
+                int rating = rs.getInt(12);
+                int discount = rs.getInt(13);
+                int stock = rs.getInt(14);
+                Date create_at = rs.getDate(15);
+                Date update_at = rs.getDate(16);
 
-                Books b = new Books(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
+                Books b = new Books(book_id, title, author, image, category_id, publishing_house, published_year, size, weight, summary, price, rating, discount, stock, create_at, update_at);
 
                 ListBooks.add(b);
 
             }
             return ListBooks;
         } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -91,7 +78,7 @@ public class DBContext {
     public ArrayList<Books> getListBooksByCategory(int categoryId, int index, String sort) {
         try {
             ArrayList<Books> ListBooksByCategory = new ArrayList<Books>();
-            String sql = "SELECT * FROM query_db.books WHERE category_id = ? ";
+            String sql = "SELECT * FROM checksql.books WHERE category_id = ? ";
             switch (sort) {
                 case "newest":
                     sql += "ORDER BY published_year DESC ";
@@ -107,7 +94,7 @@ public class DBContext {
                     break;
             }
             sql += "LIMIT 4 OFFSET ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, categoryId);
             statement.setInt(2, (index - 1) * 3);
             ResultSet rs = statement.executeQuery();
@@ -117,24 +104,26 @@ public class DBContext {
                 String author = rs.getString(3);
                 String image = rs.getString(4);
                 int category_id = rs.getInt(5);
-                int published_year = rs.getInt(6);
-                String size = rs.getString(7);
-                String weight = rs.getString(8);
-                String summary = rs.getString(9);
-                double price = rs.getDouble(10);
-                int discount = rs.getInt(11);
-                int stock = rs.getInt(12);
-                Date create_at = rs.getDate(13);
-                Date update_at = rs.getDate(14);
+                String publishing_house = rs.getString(6);
+                int published_year = rs.getInt(7);
+                String size = rs.getString(8);
+                String weight = rs.getString(9);
+                String summary = rs.getString(10);
+                double price = rs.getDouble(11);
+                int rating = rs.getInt(12);
+                int discount = rs.getInt(13);
+                int stock = rs.getInt(14);
+                Date create_at = rs.getDate(15);
+                Date update_at = rs.getDate(16);
 
-                Books b = new Books(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
+                Books b = new Books(book_id, title, author, image, category_id, publishing_house, published_year, size, weight, summary, price, rating, discount, stock, create_at, update_at);
 
                 ListBooksByCategory.add(b);
 
             }
             return ListBooksByCategory;
         } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -144,9 +133,9 @@ public class DBContext {
     public ArrayList<Books> getBookBySearch(String searchText) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
-            String sql = "SELECT * FROM query_db.books\n"
+            String sql = "SELECT * FROM checksql.books\n"
                     + "WHERE books.title like ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, "%" + searchText + "%");
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
@@ -155,24 +144,26 @@ public class DBContext {
                 String author = rs.getString(3);
                 String image = rs.getString(4);
                 int category_id = rs.getInt(5);
-                int published_year = rs.getInt(6);
-                String size = rs.getString(7);
-                String weight = rs.getString(8);
-                String summary = rs.getString(9);
-                double price = rs.getDouble(10);
-                int discount = rs.getInt(11);
-                int stock = rs.getInt(12);
-                Date create_at = rs.getDate(13);
-                Date update_at = rs.getDate(14);
+                String publishing_house = rs.getString(6);
+                int published_year = rs.getInt(7);
+                String size = rs.getString(8);
+                String weight = rs.getString(9);
+                String summary = rs.getString(10);
+                double price = rs.getDouble(11);
+                int rating = rs.getInt(12);
+                int discount = rs.getInt(13);
+                int stock = rs.getInt(14);
+                Date create_at = rs.getDate(15);
+                Date update_at = rs.getDate(16);
 
-                Books b = new Books(book_id, title, author, image, category_id, published_year, size, weight, summary, price, discount, stock, create_at, update_at);
+                Books b = new Books(book_id, title, author, image, category_id, publishing_house, published_year, size, weight, summary, price, rating, discount, stock, create_at, update_at);
 
                 ListBooks.add(b);
 
             }
             return ListBooks;
         } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -182,8 +173,8 @@ public class DBContext {
     public ArrayList<Categories> getListCategories() {
         try {
             ArrayList<Categories> ListCategories = new ArrayList<Categories>();
-            String sql = "SELECT * FROM query_db.categories;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "SELECT * FROM checksql.categories;";
+            PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int categoryId = rs.getInt(1);
@@ -197,7 +188,7 @@ public class DBContext {
             }
             return ListCategories;
         } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return null;
@@ -206,14 +197,14 @@ public class DBContext {
 
     public int getTotalBooks() {
         try {
-            String sql = "SELECT COUNT(*) FROM query_db.books;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            String sql = "SELECT COUNT(*) FROM checksql.books;";
+            PreparedStatement statement = conn.prepareStatement(sql);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return 0;
@@ -222,24 +213,19 @@ public class DBContext {
 
     public int getTotalBooksByCategory(int categoryId) {
         try {
-            String sql = "SELECT COUNT(*) FROM query_db.books\n"
+            String sql = "SELECT COUNT(*) FROM checksql.books\n"
                     + "WHERE books.category_id = ?;";
-            PreparedStatement statement = connection.prepareStatement(sql);
+            PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, categoryId);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(DBContext.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(DBConnect.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return 0;
 
-    }
-
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        DBContext db = new DBContext();
-        System.out.println(db);
     }
 }

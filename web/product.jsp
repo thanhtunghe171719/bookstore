@@ -1,11 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Book Store</title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="./css/styles.css">
     </head>
     <body>
         <jsp:include page="header.jsp"/>
@@ -76,8 +78,17 @@
                                         <h2 class="product-title">
                                             <a class="product-text" href="#">${book.getTitle()}</a>
                                         </h2>
+
+                                        <c:set var="originalPrice" value="${book.getPrice()}" />
+                                        <c:set var="discount" value="${book.getDiscount()}" />
+                                        <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
+
                                         <div class="product-price">
-                                            <span>${book.getPrice()} đ</span>
+                                            <span><fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
+                                        </div>
+
+                                        <div class="product-before-discount">
+                                            <span><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
                                         </div>
                                     </div>
                                 </div>
@@ -87,15 +98,15 @@
 
                     <div class="index-page">
                         <c:if test="${pagetag > 1}">
-                            <a class="icon-turn-left" href="product?categoryid=${param.categoryid}&index=${pagetag - 1}">&nbsp;</a>
+                            <a class="icon-turn-left" href="product?categoryid=${param.categoryid}&index=${pagetag - 1}&sort=${param.sort}">&nbsp;</a>
                         </c:if>
                         <c:forEach begin="1" end="${page}" var="page">
                             <li>
-                                <a class="${pagetag == page ? "active-page" : ""}" href="product?categoryid=${param.categoryid}&index=${page}">${page}</a>
+                                <a class="${pagetag == page ? "active-page" : ""}" href="product?categoryid=${param.categoryid}&index=${page}&sort=${param.sort}">${page}</a>
                             </li>
                         </c:forEach>
                         <c:if test="${pagetag < page}">
-                            <a class="icon-turn-right" href="product?categoryid=${param.categoryid}&index=${pagetag + 1}">&nbsp;</a>
+                            <a class="icon-turn-right" href="product?categoryid=${param.categoryid}&index=${pagetag + 1}&sort=${param.sort}">&nbsp;</a>
                         </c:if>
                     </div>
                 </div>

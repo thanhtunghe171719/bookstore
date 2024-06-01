@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package model;
+package Entity;
 
 import java.util.Date;
 import java.text.DecimalFormat;
@@ -20,11 +20,13 @@ public class Books {
     String author;
     String image;
     int category_id;
+    String publishing_house;
     int published_year;
     String size;
     String weight;
     String summary;
     double price;
+    int rating;
     int discount;
     int stock;
     Date create_at;
@@ -33,23 +35,24 @@ public class Books {
     public Books() {
     }
 
-    public Books(int book_id, String title, String author, String image, int category_id, int published_year, String size, String weight, String summary, double price, int discount, int stock, Date create_at, Date update_at) {
+    public Books(int book_id, String title, String author, String image, int category_id, String publishing_house, int published_year, String size, String weight, String summary, double price, int rating, int discount, int stock, Date create_at, Date update_at) {
         this.book_id = book_id;
         this.title = title;
         this.author = author;
         this.image = image;
         this.category_id = category_id;
+        this.publishing_house = publishing_house;
         this.published_year = published_year;
         this.size = size;
         this.weight = weight;
         this.summary = summary;
         this.price = price;
+        this.rating = rating;
         this.discount = discount;
         this.stock = stock;
         this.create_at = create_at;
         this.update_at = update_at;
     }
-
     public int getBook_id() {
         return book_id;
     }
@@ -90,6 +93,14 @@ public class Books {
         this.category_id = category_id;
     }
 
+    public String getPublishing_house() {
+        return publishing_house;
+    }
+
+    public void setPublishing_house(String publishing_house) {
+        this.publishing_house = publishing_house;
+    }
+
     public int getPublished_year() {
         return published_year;
     }
@@ -128,6 +139,14 @@ public class Books {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
     public int getDiscount() {
