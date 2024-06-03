@@ -5,6 +5,9 @@
 
 package Controller;
 
+import Entity.users;
+import Model.DAOUsers;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -12,13 +15,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.Vector;
 
 /**
  *
- * @author FPTSHOPKM4
+ * @author TDG
  */
-
-public class HomeController extends HttpServlet {
+@WebServlet(name="ChangePassWord", urlPatterns={"/ChangePassWordURL"})
+public class ChangePassWord extends HttpServlet {
    
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -30,18 +35,35 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet HomeController</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet HomeController at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        HttpSession session = request.getSession(true);        
+        users user = (users) session.getAttribute("user");
+        if (user == null) {
+            response.sendRedirect("LoginController");
         }
+        request.setAttribute("user", user);
+        
+        DAOUsers daoUser = new DAOUsers();
+        
+        String service = request.getParameter("service");
+        if (service == null) {
+            service = "listAll";
+        }
+        if (service.equals("listAll")) {
+            //select(jsp)   
+            RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
+            //run(view)
+            dispth.forward(request, response);
+        }
+        if(service.equals("changePassWord")){
+            String newPassword = request.getParameter("newPassword");
+            user.setPassword(newPassword);
+            daoUser.changePassWord(user);
+            //select(jsp)   
+            RequestDispatcher dispth = request.getRequestDispatcher("ChangePassWord.jsp");
+            //run(view)
+            dispth.forward(request, response);
+        }
+        
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -55,7 +77,7 @@ public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        processRequest(request, response);
     } 
 
     /** 

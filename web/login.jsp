@@ -19,14 +19,13 @@
         <main id="main">
 
             <!-- ======= Breadcrumbs ======= -->
-            
+
             <section class="inner-page">
                 <div class="container">
                     <h2 class="card-title text-center mb-4">Login</h2>
                     <div class="card">
                         <div class="card-body">
                             <form action="LoginController" method="post">
-
                                 <c:if test="${not empty errorMessage}">
                                     <div class="alert alert-danger" role="alert">
                                         ${errorMessage}
@@ -44,7 +43,11 @@
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-primary w-100 my-3">Login</button>
                                 </div>
+                                <div class="text-center">
+                                    <a href="resetPassword.jsp">Reset</a>
+                                </div>  
                             </form>
+
                         </div>
                     </div>
                 </div>
