@@ -31,10 +31,10 @@ function showSlide(index) {
     });
 
     // Swap the selected item with the middle item
-    let middleItem = items[1];
+    let middleItem = items[0];
     let selectedItem = items[index];
     
-    if (index !== 1) {
+    if (index !== 0) {
         let middleHTML = middleItem.innerHTML;
         middleItem.innerHTML = selectedItem.innerHTML;
         selectedItem.innerHTML = middleHTML;

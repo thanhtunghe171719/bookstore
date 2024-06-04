@@ -6,6 +6,7 @@
 package Controller;
 
 import Entity.*;
+import Model.DAOPost;
 import Model.DAOSlider;
 import Model.DAOProduct;
 import Model.DAOUsers;
@@ -50,18 +51,21 @@ public class HomePage extends HttpServlet {
 
         DAOProduct daoProduct = new DAOProduct();
         DAOSlider daoSlider = new DAOSlider();
+        DAOPost daOPost = new DAOPost();
         
-        Vector<Slider> vectorCampains = daoSlider.getAll("select * from slider ORDER BY slider_id DESC LIMIT 3");
+        Vector<Slider> vectorCampains = daoSlider.getAll("SELECT * FROM slider WHERE status = 'show' ORDER BY slider_id DESC LIMIT 3;");
         request.setAttribute("3slider", vectorCampains);
 
+        Vector<Post> vectorPost = daOPost.getAll("SELECT * FROM posts WHERE status = 'Show' ORDER BY created_at DESC LIMIT 5;");
+        request.setAttribute("5post", vectorPost);
         
         String service = request.getParameter("service");
         if (service == null) {
             service = "listAll";
         }
         if (service.equals("listAll")) {
-            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 5;");
+            request.setAttribute("5products", vectorProducts);
 
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
@@ -71,8 +75,8 @@ public class HomePage extends HttpServlet {
         
         if(service.equals("sale")){
 
-            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE discount > 0 ORDER BY discount DESC LIMIT 5;");
+            request.setAttribute("5products", vectorProducts);
 
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
@@ -82,8 +86,8 @@ public class HomePage extends HttpServlet {
         
         if(service.equals("new")){
             
-            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE book_id > 0 ORDER BY book_id DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
+            Vector<Books> vectorProducts = daoProduct.getAll("SELECT * FROM books WHERE book_id > 0 ORDER BY book_id DESC LIMIT 5;");
+            request.setAttribute("5products", vectorProducts);
 
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");
@@ -97,8 +101,8 @@ public class HomePage extends HttpServlet {
                                                                 "FROM books b LEFT JOIN order_items oi ON b.book_id = oi.book_id \n" +
                                                                 "GROUP BY b.book_id, b.title, b.author, b.image, b.category_id, b.published_year, b.size, \n" +
                                                                 "    b.weight, b.summary, b.price, b.discount, b.stock, b.create_at, b.updated_at \n" +
-                                                                "ORDER BY COALESCE(SUM(oi.quantity), 0) DESC LIMIT 6;");
-            request.setAttribute("6products", vectorProducts);
+                                                                "ORDER BY COALESCE(SUM(oi.quantity), 0) DESC LIMIT 5;");
+            request.setAttribute("5products", vectorProducts);
 
             //select(jsp)   
             RequestDispatcher dispth = request.getRequestDispatcher("homepage.jsp");

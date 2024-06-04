@@ -162,13 +162,16 @@ public class DAOUsers extends DBConnect {
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     Post post = new Post();
-                    post.setId(rs.getInt("id"));
+                    post.setPostId(rs.getInt("postId"));
+                    post.setImage(rs.getString("image"));
                     post.setTitle(rs.getString("title"));
-                    post.setBriefInfo(rs.getString("briefInfo"));
-                    post.setContent(rs.getString("content"));
-                    post.setThumbnail(rs.getString("thumbnail"));
-                    post.setCategory(rs.getString("category"));
-                    post.setUpdatedDate(rs.getTimestamp("updatedDate"));
+                    post.setCategoryId(rs.getInt("categoryId"));
+                    post.setUserId(rs.getInt("userId"));
+                    post.setDescription(rs.getString("description"));
+                    post.setStatus(rs.getString("status"));
+                    post.setCreatedAt(rs.getTimestamp("createdAt"));
+                    post.setUpdatedAt(rs.getTimestamp("updatedAt"));
+
                     list.add(post);
                 }
             }
@@ -204,13 +207,16 @@ public class DAOUsers extends DBConnect {
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 Post post = new Post();
-                post.setId(rs.getInt("id"));
+                post.setPostId(rs.getInt("postId"));
+                post.setImage(rs.getString("image"));
                 post.setTitle(rs.getString("title"));
-                post.setBriefInfo(rs.getString("briefInfo"));
-                post.setContent(rs.getString("content"));
-                post.setThumbnail(rs.getString("thumbnail"));
-                post.setCategory(rs.getString("category"));
-                post.setUpdatedDate(rs.getTimestamp("updatedDate"));
+                post.setCategoryId(rs.getInt("categoryId"));
+                post.setUserId(rs.getInt("userId"));
+                post.setDescription(rs.getString("description"));
+                post.setStatus(rs.getString("status"));
+                post.setCreatedAt(rs.getTimestamp("createdAt"));
+                post.setUpdatedAt(rs.getTimestamp("updatedAt"));
+
                 latestPosts.add(post);
             }
         } catch (SQLException e) {

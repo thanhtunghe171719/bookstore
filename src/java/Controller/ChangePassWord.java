@@ -18,6 +18,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.Vector;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+
 /**
  *
  * @author TDG
@@ -64,16 +69,24 @@ public class ChangePassWord extends HttpServlet {
             String submit = request.getParameter("submit");
             if(submit != null && submit.compareTo("save")==0){
                 String oldPassword = request.getParameter("oldPassword");
-                if(oldPassword.compareTo(user.getPassword())==0){
+                
+                // Giải mã mật khẩu đã mã hóa
+                String decodedPassword = hashPassword(oldPassword);
+                              
+                if(decodedPassword.equals(user.getPassword())){
                     String newPassword = request.getParameter("newPassword");
-                    user.setPassword(newPassword);
+                    
+                    // Mã hóa mật khẩu mới
+                    String encoded = hashPassword(newPassword);
+                    
+                    user.setPassword(encoded);
                     int result = daoUser.changePassWord(user);
                     if(result != 0 ) {
                         message = "Change Password change successful.";
                     } else {
                         message = "Change Password change failed.";
                     }
-                }else if(oldPassword.compareTo(user.getPassword())!=0){
+                }else{
                     message = "INPUT OLD PASSWORD WRONG.";
                 }
             }
@@ -85,6 +98,24 @@ public class ChangePassWord extends HttpServlet {
         }
         
     } 
+    
+    
+    // Phương thức để mã hóa mật khẩu bằng SHA-256
+    private String hashPassword(String password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(password.getBytes(StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /** 

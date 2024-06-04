@@ -32,6 +32,11 @@
                     <li><a href="product">Product</a></li>
                     <li><a href="#">Blog</a></li>
                     <li><a href="#">Cart</a></li>
+                    <div class="search_container">
+                        <form action="search" method="post">
+                            <input name="search" class="search_input" type="text" placeholder="Search product">
+                        </form>
+                    </div>
                 </ul>
             </div>
 
@@ -75,44 +80,48 @@
         <section class="slider_section">
             <div class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner">
-                    <div class="carousel-item " onclick="showSlide(0)">
-                        <div>
-                            <img src="<%= vectorCam.get(0).getImage()%>"> 
-                            <div class="read_more" style="display: none" onclick="showSlide(0)">
-                                <p style="font-size: 20px;width: 400px"><%= vectorCam.get(0).getTitle()%></p>
-                                <a href="#">
-                                    Read More
-                                </a>
+                    <div class="left-column">
+                        <div class="carousel-item " onclick="showSlide(0)">
+                            <div>
+                                <img src="<%= vectorCam.get(0).getImage()%>"> 
+                                <div class="read_more" onclick="showSlide(0)">
+                                    <p><%= vectorCam.get(0).getTitle()%></p>
+                                    <a href="#">
+                                        Read More
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item " onclick="showSlide(1)">
-                        <div>
-                            <img src="<%= vectorCam.get(1).getImage()%>">
-                            <div class="read_more"onclick="showSlide(1)">
-                                <p style="font-size: 20px;width:400px "><%= vectorCam.get(1).getTitle()%></p>
-                                <a href="#">
-                                    Read More
-                                </a>
+                                    
+                    <div class="right-column">
+                        <div class="carousel-item " onclick="showSlide(1)">
+                            <div>
+                                <img src="<%= vectorCam.get(1).getImage()%>">
+                                <div class="read_more" style="display: none" onclick="showSlide(1)">
+                                    <p><%= vectorCam.get(1).getTitle()%></p>
+                                    <a href="#">
+                                        Read More
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item" onclick="showSlide(2)">
+                            <div>
+                                <img src="<%= vectorCam.get(2).getImage()%>">
+                                <div class="read_more" style="display: none" onclick="showSlide(2)">
+                                    <p><%= vectorCam.get(2).getTitle()%></p>
+                                    <a href="#">
+                                        Read More
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="carousel-item" onclick="showSlide(2)">
-                        <div>
-                            <img src="<%= vectorCam.get(2).getImage()%>">
-                            <div class="read_more" style="display: none" onclick="showSlide(2)">
-                                <p style="font-size: 20px;width:400px "><%= vectorCam.get(2).getTitle()%></p>
-                                <a href="#">
-                                    Read More
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
                 </div>
                 <ol class="carousel-indicators">
-                    <li data-slide-to="0" onclick="showSlide(0)"></li>
-                    <li data-slide-to="1" class="active" onclick="showSlide(1)"></li>
+                    <li data-slide-to="0" class="active" onclick="showSlide(0)"></li>
+                    <li data-slide-to="1" onclick="showSlide(1)"></li>
                     <li data-slide-to="2" onclick="showSlide(2)"></li>
                 </ol>
             </div>
@@ -120,7 +129,7 @@
             
  
                                 
-
+                                    <br>
     <div class="body-page">
         <div class="table-container">
             <table class="custom-table">
@@ -139,10 +148,11 @@
             <table class="product-table">
                 
 <%
-    Vector<Books> vectorPro = (Vector<Books>) request.getAttribute("6products");
+    Vector<Books> vectorPro = (Vector<Books>) request.getAttribute("5products");
+    if(vectorPro != null){
     int counter = 0; 
     for (Books book : vectorPro) {
-        if (counter % 3 == 0) { 
+        if (counter % 5 == 0) { 
             if (counter > 0) {
                 out.println("</tr>");
             }
@@ -152,10 +162,10 @@
         int discount = book.getDiscount();
         double discountedPrice = originalPrice - (originalPrice * discount / 100.0);
 %>
-        <td style="padding: 5px;"> 
-            <div class="product-box" style="width: 450px; margin: auto;"> 
+        <td> 
+            <div class="product-box"> 
                 <div class="product-img">
-                    <img src="<%=book.getImage()%>" alt="alt" style="width: 450px; height: 400px;"/> 
+                    <img src="<%=book.getImage()%>" alt="alt"/> 
                 </div>
                 <div class="product-detail">
                     <h4><%=book.getTitle()%></h4>
@@ -168,7 +178,7 @@
                             <span>$<%= originalPrice %></span>
                         <% } %>
                     </div>
-                    <div class="add-cart">
+                    <div class="detail-product">
                         <a href="#">Detail</a>
                     </div>
                 </div>
@@ -177,19 +187,44 @@
 <%
         counter++;
     }
-    if (counter % 3 != 0) {
+    if (counter % 5 != 0) {
         out.println("</tr>");
     }
+}
 %>
 
             </table>
-        <div class="more-product"><a href="product">MORE</a></div>
+        <div class="more-product"><a href="product">MORE PRODUCT</a></div>
         </div>
     </div>
+<br>
 
 
-
-
+<!--show any blog-->
+<div class="blog-home">
+    <table>
+        <tr>
+            <th colspan="5" style="font-size: 25px;">New Post</th>
+        </tr>
+        <tr>
+            <%
+                Vector<Post> vectorPost = (Vector<Post>) request.getAttribute("5post");
+                if(vectorPost != null){
+                    for (Post post : vectorPost) {
+            %>
+                <td>
+                    <div class="each-post-home">
+                        <img src="<%=post.getImage()%>" alt="alt"/> 
+                        <h4><%=post.getTitle()%></h4>
+                        <a href="#">read it</a>
+                    </div>
+                </td>
+            <%}}%>
+        </tr>
+    </table>
+        <div class="more-product"><a href="#">MORE POST</a></div>
+</div>
+        <br>
             <!--footer-->
             <div class="footer">
                 <div>

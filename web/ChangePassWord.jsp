@@ -86,18 +86,23 @@
                                         <caption style="font-size: 20px;padding: 10px;font-weight: bold;">Change Password</caption>
                                         <tr>
                                             <td>Old password </td>
-                                            <td><input type="password" id="oldPassword" name="oldPassword" onkeyup="checkOldPasswords();"></td>
+                                            <td><input type="password" id="oldPassword" name="oldPassword" onkeyup="checkOldPasswords();">
+                                                <img src="https://rip.to/EZXBR" id="togglePassword0" style="cursor: pointer;width:20px;" onclick="togglePasswordVisibility(0)" />                                                
+                                            </td>
                                             <td id="oldPasswordResult"></td>
-                                            <td id="storedPassword"  value="<%=userVector.get(0).getPassword()%>" ></td>
                                         </tr>
                                         <tr>
                                             <td>New password </td>
-                                            <td><input type="password" id="newPassword" name="newPassword" onkeyup="checkNewPasswords();"></td>
+                                            <td><input type="password" id="newPassword" name="newPassword" onkeyup="checkNewPasswords();">
+                                                <img src="https://rip.to/EZXBR" id="togglePassword1" style="cursor: pointer;width:20px;" onclick="togglePasswordVisibility(1)" />                                                
+                                            </td>
                                             <td id="newPasswordResult"></td>
                                         </tr>
                                         <tr>
                                             <td>Confirm new password </td>
-                                            <td><input type="password" id="confirmNewPassword" onkeyup="checkConfirmNewPasswords();"></td>
+                                            <td><input type="password" id="confirmNewPassword" onkeyup="checkConfirmNewPasswords();">
+                                                <img src="https://rip.to/EZXBR" id="togglePassword2" style="cursor: pointer;width:20px;" onclick="togglePasswordVisibility(2)" />                                                
+                                            </td>
                                             <td id="confirmNewPasswordResult"></td>
                                         </tr>
                                         <tr>

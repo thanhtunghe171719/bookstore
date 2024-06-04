@@ -9,45 +9,39 @@
             
     function checkOldPasswords() {
         const oldPassword = document.getElementById('oldPassword').value;
-        // Check old password
-        if (oldPassword !== "") {
+
+        // Kiểm tra old password
+        if (oldPassword.length >= 8 &&/^[A-Z].*$/.test(oldPassword) &&/^\S+$/.test(oldPassword)) {
             document.getElementById('oldPasswordResult').innerHTML = "<span style='color:green;'>✔</span>";
             oldPasswordValid = true;
         } else {
-            document.getElementById('oldPasswordResult').innerHTML = "<span style='color:red;'>✘ not empty</span>";
+            document.getElementById('oldPasswordResult').innerHTML = "<span style='color:red;'>✘</span>";
             oldPasswordValid = false;
         }
-        checkNewPasswords();
-        checkConfirmNewPasswords();
         checkButton();
-    }        
-    
+    }
+
     function checkNewPasswords() {
         const oldPassword = document.getElementById('oldPassword').value;
         const newPassword = document.getElementById('newPassword').value;
-        //check old password different new password
-        if (newPassword !== "") {
-            if (newPassword !== oldPassword) {
-                document.getElementById('newPasswordResult').innerHTML = "<span style='color:green;'>✔</span>";
-                newPasswordValid = true;
-            }else{
-                document.getElementById('newPasswordResult').innerHTML = "<span style='color:red;'>✘ not same old password</span>";
-                newPasswordValid =false;
-            }
+
+        // Kiểm tra new password
+        if (newPassword.length >= 8 &&/^[A-Z].*$/.test(newPassword) &&/^\S+$/.test(newPassword)) {
+            document.getElementById('newPasswordResult').innerHTML = "<span style='color:green;'>✔</span>";
+            newPasswordValid = true;
         } else {
-            document.getElementById('newPasswordResult').innerHTML = "<span style='color:red;'>✘ not empty</span>";
-            newPasswordValid =false;
+            document.getElementById('newPasswordResult').innerHTML = "<span style='color:red;'>✘</span>";
+            newPasswordValid = false;
         }
-        checkOldPasswords();
-        checkConfirmNewPasswords();
         checkButton();
     }
+
     
     function checkConfirmNewPasswords() {
         const newPassword = document.getElementById('newPassword').value;
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
         // Check new password and confirm new password match
-        if (newPassword !== "") {
+        if (confirmNewPassword !== "") {
             if (newPassword === confirmNewPassword) {
                 document.getElementById('confirmNewPasswordResult').innerHTML = "<span style='color:green;'>✔</span>";
                 confirmNewPasswordValid = true;
@@ -73,4 +67,34 @@
                 //document.getElementById('check-3-password').innerHTML = "<span style='color:red;'>empty or input wrong</span>";
             }
         }
-        
+    
+
+let passwordVisible = [false, false, false]; // Mảng để lưu trữ trạng thái của từng trường mật khẩu
+
+function togglePasswordVisibility(index) {
+    let passwordInputId;
+    if (index === 0) {
+        passwordInputId = 'oldPassword';
+    } else if (index === 1) {
+        passwordInputId = 'newPassword';
+    } else if (index === 2) {
+        passwordInputId = 'confirmNewPassword';
+    } else {
+        console.error("Invalid index provided to togglePasswordVisibility function");
+        return;
+    }
+
+    const passwordInput = document.getElementById(passwordInputId);
+    const eyeIcon = document.getElementById(`togglePassword${index}`);
+
+    passwordVisible[index] = !passwordVisible[index];
+
+    if (passwordVisible[index]) {
+        passwordInput.type = 'text';
+        eyeIcon.src = 'https://cdn-icons-png.freepik.com/512/64/64943.png';
+    } else {
+        passwordInput.type = 'password';
+        eyeIcon.src = 'https://rip.to/EZXBR';
+    }
+}
+
