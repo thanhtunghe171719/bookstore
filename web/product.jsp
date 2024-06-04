@@ -83,12 +83,33 @@
                                         <c:set var="discount" value="${book.getDiscount()}" />
                                         <c:set var="discountedPrice" value="${originalPrice - (originalPrice * discount / 100)}" />
 
-                                        <div class="product-price">
-                                            <span><fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
-                                        </div>
+                                        <c:choose>
+                                            <c:when test="${originalPrice eq discountedPrice}">
+                                                <div class="product-price">
+                                                    <span><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="product-price">
+                                                    <span><fmt:formatNumber value="${discountedPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
+                                                </div>
+                                                <div class="product-before-discount">
+                                                    <span><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
 
-                                        <div class="product-before-discount">
-                                            <span><fmt:formatNumber value="${originalPrice}" type="number" minFractionDigits="3" maxFractionDigits="3" /> đ</span>
+                                        <div class="rating">
+                                            <c:forEach var="i" begin="1" end="5">
+                                                <c:choose>
+                                                    <c:when test="${i <= book.getRating()}">
+                                                        <span class="product-star product-filled-star">★</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span class="product-star">★</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                 </div>
@@ -114,9 +135,7 @@
 
             <div>
                 <div class="container">
-                    <ol class="breadcumb">
-                        <li class="home"><span>&nbsp;</span></li>
-                    </ol>
+                    <span>&nbsp;</span>
                 </div>
             </div>
         </div>
