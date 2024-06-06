@@ -199,6 +199,15 @@ ul, ol {
     border-bottom: 1px solid #ecebeb;
 }
 
+.search-result-box {
+    display: flex;
+    padding-bottom: 5px;
+}
+
+.search-result{
+    font-weight: bold;
+}
+
 .sorter {
     padding-left: 20px;
 }

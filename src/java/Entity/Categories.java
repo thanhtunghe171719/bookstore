@@ -4,6 +4,8 @@
  */
 package Entity;
 
+import java.util.Date;
+
 /**
  *
  * @author skyfc
@@ -11,15 +13,17 @@ package Entity;
 public class Categories {
     int categoryId;
     String categoryName;
-    String categoryLink;
+    Date create_at;
+    Date updated_at;
 
     public Categories() {
     }
 
-    public Categories(int categoryId, String categoryName, String categoryLink) {
+    public Categories(int categoryId, String categoryName, Date create_at, Date updated_at) {
         this.categoryId = categoryId;
         this.categoryName = categoryName;
-        this.categoryLink = categoryLink;
+        this.create_at = create_at;
+        this.updated_at = updated_at;
     }
 
     public int getCategoryId() {
@@ -38,12 +42,20 @@ public class Categories {
         this.categoryName = categoryName;
     }
 
-    public String getCategoryLink() {
-        return categoryLink;
+    public Date getCreate_at() {
+        return create_at;
     }
 
-    public void setCategoryLink(String categoryLink) {
-        this.categoryLink = categoryLink;
+    public void setCreate_at(Date create_at) {
+        this.create_at = create_at;
+    }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(Date updated_at) {
+        this.updated_at = updated_at;
     }
 
     

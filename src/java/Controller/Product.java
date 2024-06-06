@@ -80,6 +80,11 @@ public class Product extends HttpServlet {
             sort = "default";
         }
 
+        String grid = request.getParameter("grid");
+        if (grid == null) {
+            grid = "8";
+        }
+
         String categoryidParam = request.getParameter("categoryid");
         if (categoryidParam == null) {
             categoryidParam = "0";
@@ -87,24 +92,26 @@ public class Product extends HttpServlet {
 
         ArrayList<Books> lst_books;
         int totalBooks = 0;
+        
+        int categoryid = 0;
 
         if (categoryidParam == "0") {
-            lst_books = daoBooksList.getListBooks(index, sort);
+            lst_books = daoBooksList.getListBooks(grid, index, sort);
             totalBooks = daoBooksList.getTotalBooks();
         } else {
             try {
-                int categoryid = Integer.parseInt(categoryidParam);
-                lst_books = daoBooksList.getListBooksByCategory(categoryid, index, sort);
+                categoryid = Integer.parseInt(categoryidParam);
+                lst_books = daoBooksList.getListBooksByCategory(categoryid, grid, index, sort);
                 totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
 
             } catch (NumberFormatException e) {
                 // Handle the error, maybe set a default category or show an error message
                 totalBooks = daoBooksList.getTotalBooks();
-                lst_books = daoBooksList.getListBooks(index, sort); // Default behavior if parsing fails
+                lst_books = daoBooksList.getListBooks(grid, index, sort); // Default behavior if parsing fails
             }
         }
 
-        int page = (totalBooks + 2) / 3; // Round up for pagination
+        int page = (totalBooks + 2) / Integer.parseInt(grid); // Round up for pagination
 
         ArrayList<Categories> lst_categories = daoBooksList.getListCategories();
 
@@ -112,7 +119,9 @@ public class Product extends HttpServlet {
         request.setAttribute("page", page);
         request.setAttribute("pagetag", index);
         request.setAttribute("category", lst_categories);
+        request.setAttribute("tag", categoryid);
         request.setAttribute("sort", sort);
+        request.setAttribute("grid", grid);
 
         request.getRequestDispatcher("product.jsp").forward(request, response);
     }

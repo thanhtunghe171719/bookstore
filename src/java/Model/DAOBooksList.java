@@ -21,7 +21,7 @@ import java.util.logging.Logger;
  */
 public class DAOBooksList extends DBConnect {
 
-    public ArrayList<Books> getListBooks(int index, String sort) {
+    public ArrayList<Books> getListBooks(String grid, int index, String sort) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
             String sql = "SELECT * FROM checksql.books ";
@@ -39,9 +39,10 @@ public class DAOBooksList extends DBConnect {
                     // Default sorting logic, if needed
                     break;
             }
-            sql += "LIMIT 4 OFFSET ?;";
+            sql += "LIMIT ? OFFSET ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, (index - 1) * 3);
+            statement.setInt(1, Integer.parseInt(grid));
+            statement.setInt(2, (index - 1) * Integer.parseInt(grid));
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int book_id = rs.getInt(1);
@@ -75,7 +76,7 @@ public class DAOBooksList extends DBConnect {
 
     }
 
-    public ArrayList<Books> getListBooksByCategory(int categoryId, int index, String sort) {
+    public ArrayList<Books> getListBooksByCategory(int categoryId, String grid, int index, String sort) {
         try {
             ArrayList<Books> ListBooksByCategory = new ArrayList<Books>();
             String sql = "SELECT * FROM checksql.books WHERE category_id = ? ";
@@ -93,10 +94,11 @@ public class DAOBooksList extends DBConnect {
                     // Default sorting logic, if needed
                     break;
             }
-            sql += "LIMIT 4 OFFSET ?;";
+            sql += "LIMIT ? OFFSET ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, categoryId);
-            statement.setInt(2, (index - 1) * 3);
+            statement.setInt(2, Integer.parseInt(grid));
+            statement.setInt(3, (index - 1) * Integer.parseInt(grid));
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int book_id = rs.getInt(1);
@@ -130,13 +132,31 @@ public class DAOBooksList extends DBConnect {
 
     }
 
-    public ArrayList<Books> getBookBySearch(String searchText) {
+    public ArrayList<Books> getBookBySearch(String searchText, String grid, int index, String sort) {
         try {
             ArrayList<Books> ListBooks = new ArrayList<Books>();
             String sql = "SELECT * FROM checksql.books\n"
                     + "WHERE books.title like ?";
+
+            switch (sort) {
+                case "newest":
+                    sql += "ORDER BY published_year DESC ";
+                    break;
+                case "price_asc":
+                    sql += "ORDER BY price ASC ";
+                    break;
+                case "price_desc":
+                    sql += "ORDER BY price DESC ";
+                    break;
+                default:
+                    // Default sorting logic, if needed
+                    break;
+            }
+            sql += "LIMIT ? OFFSET ?;";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, "%" + searchText + "%");
+            statement.setInt(2, Integer.parseInt(grid));
+            statement.setInt(3, (index - 1) * Integer.parseInt(grid));
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 int book_id = rs.getInt(1);
@@ -179,9 +199,10 @@ public class DAOBooksList extends DBConnect {
             while (rs.next()) {
                 int categoryId = rs.getInt(1);
                 String categoryName = rs.getString(2);
-                String categoryLink = rs.getString(3);
+                Date create_at = rs.getDate(3);
+                Date updated_at = rs.getDate(4);
 
-                Categories c = new Categories(categoryId, categoryName, categoryLink);
+                Categories c = new Categories(categoryId, categoryName, create_at, updated_at);
 
                 ListCategories.add(c);
 

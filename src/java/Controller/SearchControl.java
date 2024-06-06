@@ -35,32 +35,38 @@ public class SearchControl extends HttpServlet {
             sort = "default";
         }
 
+        String grid = request.getParameter("grid");
+        if (grid == null) {
+            grid = "8";
+        }
+
         String categoryidParam = request.getParameter("categoryid");
         int categoryid = (categoryidParam == null) ? 0 : Integer.parseInt(categoryidParam);
 
         ArrayList<Books> lst_books;
-        int totalBooks;
+        int totalBooks = 0;
 
         if (searchText != null && !searchText.isEmpty()) {
-            lst_books = daoBooksList.getBookBySearch(searchText);
+            lst_books = daoBooksList.getBookBySearch(searchText, grid, index, sort);
             totalBooks = lst_books.size();
         } else {
             if (categoryid == 0) {
-                lst_books = daoBooksList.getListBooks(index, sort);
+                lst_books = daoBooksList.getListBooks(grid, index, sort);
                 totalBooks = daoBooksList.getTotalBooks();
             } else {
-                lst_books = daoBooksList.getListBooksByCategory(categoryid, index, sort);
+                lst_books = daoBooksList.getListBooksByCategory(categoryid, grid, index, sort);
                 totalBooks = daoBooksList.getTotalBooksByCategory(categoryid);
             }
         }
 
-        int page = (totalBooks + 2) / 3; // Round up for pagination
+        int page = (totalBooks + 2) / Integer.parseInt(grid); // Round up for pagination
 
         ArrayList<Categories> lst_categories = daoBooksList.getListCategories();
 
         request.setAttribute("book", lst_books);
         request.setAttribute("page", page);
         request.setAttribute("pagetag", index);
+        request.setAttribute("search", searchText);
         request.setAttribute("category", lst_categories);
         request.setAttribute("sort", sort);
 

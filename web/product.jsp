@@ -16,7 +16,7 @@
             <div class="container">
                 <div class="search_container">
                     <form action="search" method="post">
-                        <input name="search" class="search_input" type="text" placeholder="Search">
+                        <input value="${search}" name="search" class="search_input" type="text" placeholder="Search">
                     </form>
                 </div>
             </div>
@@ -42,6 +42,18 @@
                 <div class="content">
                     <div class="toolbar-top">
                         <div class="toolbar">
+                            <%
+                                String searchText = (String) request.getAttribute("search");
+                                if(searchText != null && searchText != ""){
+                            %>
+
+                            <div class="search-result-box">
+                                <div class="search-result">Kết quả tìm kiếm: &nbsp;</div>
+                                <div> ${search}</div>
+                            </div>
+
+                            <% } %>
+
                             <div class="sorter">
                                 <div class="abc-xyz">
                                     <div class="dropdown-text">
@@ -50,9 +62,114 @@
                                     <div class="sort-by">
                                         <div class="selectedBox">
                                             <select class="selected-order" name="sort" id="sort" onchange="location = this.value;">
-                                                <option value="product?categoryid=${param.categoryid}&index=1&sort=newest" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ %> selected <% } %>>Mới nhất</option>
-                                                <option value="product?categoryid=${param.categoryid}&index=1&sort=price_asc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ %> selected <% } %>>Giá tăng dần</option>
-                                                <option value="product?categoryid=${param.categoryid}&index=1&sort=price_desc" <% if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ %> selected <% } %>>Giá giảm dần</option>
+                                                <option  
+
+                                                    <%
+                                                        if(searchText != null && searchText != ""){
+                                                    %>
+
+                                                    value="search?search=${search}&sort=newest"
+
+                                                    <% } else { %>
+
+                                                    value="product?categoryid=${param.categoryid}&index=1&sort=newest&grid=${grid}"
+
+                                                    <% } %>
+
+                                                    <% 
+                                                        if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("newest")){ 
+                                                    %> 
+                                                    selected 
+                                                    <% } %>
+                                                    >Mới nhất</option>
+
+                                                <option  
+
+                                                    <%
+                                                        if(searchText != null && searchText != ""){
+                                                    %>
+
+                                                    value="search?search=${search}&sort=price_asc"
+
+                                                    <% } else { %>
+
+                                                    value="product?categoryid=${param.categoryid}&index=1&sort=price_asc&grid=${grid}"
+
+                                                    <% } %>
+
+                                                    <% 
+                                                        if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_asc")){ 
+                                                    %> 
+                                                    selected 
+                                                    <% } %>
+                                                    >Giá tăng dần</option>
+                                                <option 
+
+                                                    <%
+                                                        if(searchText != null && searchText != ""){
+                                                    %>
+
+                                                    value="search?search=${search}&sort=price_desc"
+
+                                                    <% } else { %>
+
+                                                    value="product?categoryid=${param.categoryid}&index=1&sort=price_desc&grid=${grid}" 
+
+                                                    <% } %>
+
+                                                    <% 
+                                                        if((request.getAttribute("sort") != null) && request.getAttribute("sort").equals("price_desc")){ 
+                                                    %> 
+                                                    selected 
+                                                    <% } %>
+                                                    >Giá giảm dần</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="sort-by">
+                                        <div class="selectedBox">
+                                            <select class="selected-order" name="grid" id="grid" onchange="location = this.value;">
+                                                <option  
+
+                                                    <%
+                                                        if(searchText != null && searchText != ""){
+                                                    %>
+
+                                                    value="search?search=${search}&sort=newest"
+
+                                                    <% } else { %>
+
+                                                    value="product?categoryid=${param.categoryid}&index=1&sort=${param.sort}&grid=8"
+
+                                                    <% } %>
+
+                                                    <% 
+                                                        if((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(8)){ 
+                                                    %> 
+                                                    selected 
+                                                    <% } %>
+                                                    >8 sản phẩm</option>
+
+                                                <option  
+
+                                                    <%
+                                                        if(searchText != null && searchText != ""){
+                                                    %>
+
+                                                    value="search?search=${search}&sort=price_asc"
+
+                                                    <% } else { %>
+
+                                                    value="product?categoryid=${param.categoryid}&index=1&sort=${param.sort}&grid=12"
+
+                                                    <% } %>
+
+                                                    <% 
+                                                        if((request.getAttribute("grid") != null) && request.getAttribute("grid").equals(12)){ 
+                                                    %> 
+                                                    selected 
+                                                    <% } %>
+                                                    >12 sản phẩm</option>
                                             </select>
                                         </div>
                                     </div>
@@ -119,15 +236,57 @@
 
                     <div class="index-page">
                         <c:if test="${pagetag > 1}">
-                            <a class="icon-turn-left" href="product?categoryid=${param.categoryid}&index=${pagetag - 1}&sort=${param.sort}">&nbsp;</a>
+                            <a class="icon-turn-left" 
+                               <%
+                                    
+                                    if(searchText != null && searchText != ""){
+                                   
+                               %>
+
+                               href="search?search=${search}&index=${pagetag - 1}&sort=${param.sort}"
+
+                               <% } else { %>
+
+                               href="product?categoryid=${param.categoryid}&index=${pagetag - 1}&sort=${param.sort}"
+
+                               <% } %>
+                               >&nbsp;</a>
                         </c:if>
+                        <%
+                                    
+                                    if(searchText != null && searchText != ""){
+                                   
+                        %>
+                        <c:forEach begin="1" end="${page}" var="page">
+                            <li>
+                                <a class="${pagetag == page ? "active-page" : ""}" href="search?search=${search}&index=${page}&sort=${param.sort}">${page}</a>
+                            </li>
+                        </c:forEach>
+                        <% } else { %>
                         <c:forEach begin="1" end="${page}" var="page">
                             <li>
                                 <a class="${pagetag == page ? "active-page" : ""}" href="product?categoryid=${param.categoryid}&index=${page}&sort=${param.sort}">${page}</a>
                             </li>
                         </c:forEach>
+                        <% } %>
+
                         <c:if test="${pagetag < page}">
-                            <a class="icon-turn-right" href="product?categoryid=${param.categoryid}&index=${pagetag + 1}&sort=${param.sort}">&nbsp;</a>
+                            <a class="icon-turn-right" 
+
+                               <%
+                                    
+                                    if(searchText != null && searchText != ""){
+                                   
+                               %>
+
+                               href="search?search=${search}&index=${pagetag + 1}&sort=${param.sort}"
+
+                               <% } else { %>
+
+                               href="product?categoryid=${param.categoryid}&index=${pagetag + 1}&sort=${param.sort}"
+
+                               <% } %>
+                               >&nbsp;</a>
                         </c:if>
                     </div>
                 </div>
